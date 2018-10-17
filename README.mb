@@ -10,3 +10,23 @@ Hakaton Project
 
 
 
+
+
+
+## CHAT module
+ Just short testable implementation of chat module based on socket
+ `GET        /chat                chat.ChatController.chatSocket`
+ needed headers:
+ "chat-sender":"SENDER_NAME"
+ "chat-receiver":"RECEIVER_NAME"
+
+
+ TODO:
+    persistance of messages
+    current user usage
+    multiple same user connection instances
+
+
+
+
+
