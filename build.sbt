@@ -1,9 +1,10 @@
-name := """play-chat"""
+
+name := """tubmbleweed"""
 organization := "com.ednax"
 
 version := "1.0-SNAPSHOT"
 
-lazy val root = (project in file(".")).enablePlugins(PlayScala)
+lazy val tubmbleweed = (project in file(".")).enablePlugins(PlayScala)
 
 scalaVersion := "2.12.6"
 
