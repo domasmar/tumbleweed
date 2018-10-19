@@ -18,6 +18,7 @@ libraryDependencies += "org.mongodb.scala" %% "mongo-scala-driver" % "2.4.2"
 libraryDependencies += "com.fasterxml.jackson.module" %% "jackson-module-scala" % "2.9.7"
 
 
+herokuAppName in Compile := "tumbleweed-hack"
 
 // Adds additional packages into Twirl
 //TwirlKeys.templateImports += "com.ednax.controllers._"
