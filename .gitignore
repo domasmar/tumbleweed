@@ -39,3 +39,6 @@ logs/
 
 # Frontend
 node_modules
+
+target/
+/.idea/
