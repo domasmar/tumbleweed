@@ -16,6 +16,7 @@ libraryDependencies += "com.typesafe.play" %% "play-json" % "2.6.10"
 libraryDependencies += "org.mongodb.scala" %% "mongo-scala-driver" % "2.4.2"
 
 
+herokuAppName in Compile := "tumbleweed-hack"
 
 // Adds additional packages into Twirl
 //TwirlKeys.templateImports += "com.ednax.controllers._"
