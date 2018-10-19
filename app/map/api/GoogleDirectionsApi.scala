@@ -1,26 +1,48 @@
 package map.api
 
+import akka.util.Timeout
+import com.fasterxml.jackson.databind.{DeserializationFeature, ObjectMapper}
+import com.fasterxml.jackson.module.scala.DefaultScalaModule
 import javax.inject.{Inject, Singleton}
-import map.model.RoadPoint
-import play.api.libs.ws.{WSClient, WSRequest}
+import map.model.{RoutePoint, RouteWrapper}
+import play.api.Configuration
+import play.api.libs.ws.{WSClient, WSRequest, WSResponse}
 
 import scala.concurrent.duration._
+import scala.concurrent.{Await, Future}
 
 @Singleton
-class GoogleDirectionsApi @Inject()(ws: WSClient) {
+class GoogleDirectionsApi @Inject()(ws: WSClient, config: Configuration) {
 
-  private val baseUrl = "https://maps.googleapis.com/maps/api/directions/json"
+  implicit val responseTimeout: Duration = Timeout(5 seconds).duration
 
-  def getRoad(startLocation: RoadPoint, endLocation: RoadPoint) = {
+  val mapper = new ObjectMapper()
+  mapper.registerModule(DefaultScalaModule)
+  mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
 
-    val request = ws.url(baseUrl)
+  private val directionsApiUrl = "https://maps.googleapis.com/maps/api/directions/json"
 
-    val complexRequest: WSRequest =
-      request.addHttpHeaders("Accept" -> "application/json")
-        .addQueryStringParameters("origin" -> "40.6781877,-73.9442203")
-        .addQueryStringParameters("destination" -> "40.7282208,-73.79488019999999")
-        .addQueryStringParameters("mode" -> "driving")
-        .addQueryStringParameters("key" -> "AIzaSyBpDvGSJUey9dg2tTZURDcYSNPi35lp8Vs")
-        .withRequestTimeout(10000.millis)
+  private val apiKey: String = config.get[String]("google.api.key")
+
+  private def buildDirectionsRequest(): WSRequest = {
+    ws.url(directionsApiUrl)
+      .addHttpHeaders("Accept" -> "application/json")
+      .addQueryStringParameters("mode" -> "driving")
+      .addQueryStringParameters("key" -> apiKey)
+      .withRequestTimeout(responseTimeout)
   }
+
+
+  def getRoad(startLocation: RoutePoint, endLocation: RoutePoint): RouteWrapper = {
+
+    val complexRequest: WSRequest = buildDirectionsRequest()
+      .addQueryStringParameters("origin" -> startLocation.toString)
+      .addQueryStringParameters("destination" -> endLocation.toString)
+
+    val futureResponse: Future[WSResponse] = complexRequest.get()
+    val resp: WSResponse = Await.result(futureResponse, responseTimeout)
+    mapper.readValue(resp.json.toString(), classOf[RouteWrapper])
+  }
+
+
 }

@@ -1,0 +1,332 @@
+//gapi.getRoad(RoutePoint(40.6781877, -73.9442203), RoutePoint(40.7282208, -73.79488019999999))
+
+{
+  "geocoded_waypoints": [
+    {
+      "geocoder_status": "OK",
+      "place_id": "ChIJrTV1roVbwokRoO_wQ1gkK8o",
+      "types": [
+        "route"
+      ]
+    },
+    {
+      "geocoder_status": "OK",
+      "place_id": "ChIJjZPmoSVhwokR3LDZ_opggQA",
+      "types": [
+        "establishment",
+        "point_of_interest",
+        "school"
+      ]
+    }
+  ],
+  "routes": [
+    {
+      "bounds": {
+        "northeast": {
+          "lat": 40.7293779,
+          "lng": -73.7902347
+        },
+        "southwest": {
+          "lat": 40.6755653,
+          "lng": -73.94417659999999
+        }
+      },
+      "copyrights": "Map data ©2018 Google",
+      "legs": [
+        {
+          "distance": {
+            "text": "10.5 mi",
+            "value": 16842
+          },
+          "duration": {
+            "text": "29 mins",
+            "value": 1719
+          },
+          "end_address": "74-20 175th St, Flushing, NY 11366, USA",
+          "end_location": {
+            "lat": 40.7282259,
+            "lng": -73.7948332
+          },
+          "start_address": "Brooklyn Ave, Brooklyn, NY 11216, USA",
+          "start_location": {
+            "lat": 40.678183,
+            "lng": -73.94416129999999
+          },
+          "steps": [
+            {
+              "distance": {
+                "text": "1.9 mi",
+                "value": 3058
+              },
+              "duration": {
+                "text": "9 mins",
+                "value": 569
+              },
+              "end_location": {
+                "lat": 40.6761353,
+                "lng": -73.9081525
+              },
+              "html_instructions": "Head <b>south</b> on <b>Atlantic Ave</b> toward <b>Atlantic Ave</b><div style=\"font-size:0.9em\">Pass by Popeyes Louisiana Kitchen (on the right in 1.2&nbsp;mi)</div>",
+              "polyline": {
+                "points": "s}gwF~eibMTBJcGBk@@iAB}@@}@@Y@[^kPFkCDeBNuHTqKFwC@i@@m@XoM@a@T_KDkCDiAX{MJkER_KHoDHkDHiDFqD@a@BcA@uAH}DHaEHoDHyDHuDHsDF_EHsDJ}DBuBBg@A["
+              },
+              "start_location": {
+                "lat": 40.678183,
+                "lng": -73.94416129999999
+              },
+              "travel_mode": "DRIVING"
+            },
+            {
+              "distance": {
+                "text": "0.6 mi",
+                "value": 959
+              },
+              "duration": {
+                "text": "2 mins",
+                "value": 144
+              },
+              "end_location": {
+                "lat": 40.6756717,
+                "lng": -73.89684
+              },
+              "html_instructions": "Continue straight to stay on <b>Atlantic Ave</b>",
+              "maneuver": "straight",
+              "polyline": {
+                "points": "{pgwF|dbbMAYPiJP_IDeAFiAR_D?CBc@@MB_@?CF}@Be@NiBD{@@y@ByBCkCE{DAs@?UAoA@_@?QAGImD"
+              },
+              "start_location": {
+                "lat": 40.6761353,
+                "lng": -73.9081525
+              },
+              "travel_mode": "DRIVING"
+            },
+            {
+              "distance": {
+                "text": "0.2 mi",
+                "value": 263
+              },
+              "duration": {
+                "text": "2 mins",
+                "value": 92
+              },
+              "end_location": {
+                "lat": 40.6779881,
+                "lng": -73.8974369
+              },
+              "html_instructions": "Turn <b>left</b> onto <b>Pennsylvania Ave</b><div style=\"font-size:0.9em\">Pass by McDonald's (on the left)</div>",
+              "maneuver": "turn-left",
+              "polyline": {
+                "points": "}mgwFf~_bMYDSBMBw@NiBZWDc@FYBaAPc@H]DWH"
+              },
+              "start_location": {
+                "lat": 40.6756717,
+                "lng": -73.89684
+              },
+              "travel_mode": "DRIVING"
+            },
+            {
+              "distance": {
+                "text": "5.4 mi",
+                "value": 8715
+              },
+              "duration": {
+                "text": "8 mins",
+                "value": 493
+              },
+              "end_location": {
+                "lat": 40.7160071,
+                "lng": -73.818457
+              },
+              "html_instructions": "Continue straight onto <b>Interborough Pkwy</b>/<b>Jackie Robinson Pkwy</b><div style=\"font-size:0.9em\">Continue to follow Jackie Robinson Pkwy</div>",
+              "maneuver": "straight",
+              "polyline": {
+                "points": "m|gwF~a`bM]?UAKAQ?QA[EmAa@oBq@UI_@KUIOEQEc@I_@GYC[EYCe@CiCCSA_@GYCWE[IYIWKYKYOUO[Sy@i@iAy@gA{@g@c@_@_@e@_@m@m@Y[sAsAoAsAu@w@k@g@u@m@e@_@o@g@q@g@qB{Ao@g@k@_@u@k@}C_CuAeASQGEQOOSOQOUKQMWIWKWI[I]G_@CQEYE]CYE[C[EYE]CYEc@YiCUcBe@eDQqAYkBE]aAwFOy@Mu@Ie@EYC_@Ea@Ca@MqCMiCKqBKsBGmAA]AQAOCOCOEMEMGMEKGIEEGGGGMIIEICKCKAMCM?OAOAKCKCKEIEIGIGGKGKGKEMGMEO]qAGMCKGIEMGKIIGGGIEEGEIGGEGEIEg@QKEKEIEIGGGIGGICGIIY_@OUMKMOQQs@q@SUSS_A}@OOKOKOGKIMGOUk@Kg@Ki@Gi@Gk@MmAEm@WcCKaAEg@E[EWG]GWIYIYKWKWKUMWMUOQOQMOKMOOOMOKSMQKQISGQGUGUEUEaDi@UCQEUEUGUISGSKOKQKQKOKUSQOQSOQOSMSOUMWKWKUKWIUK[GWIYGUEUGWCUESEWEYE]C[Ea@C[C]AWA[A[A_@Aa@?i@A_@@]?]@c@?[@UB]@[@]B[B[BYDYHy@Hy@D[B[D[B[@YB[?Y@c@?YA_@AYC]CYCa@Ks@EYGUGWGWIYIWKWY{@Y{@KYM]K]K]G[GYGWG_@E]E]MkAIu@Is@G_@EYG_@G[G]I[GWKYK[Oa@KSYq@OWWa@KQIKKOs@_AKOKKIIIIOMMMOKMKUOOKcC_BOKOMm@m@g@q@MQOW_@u@Q_@Oe@Mc@Mi@GWEUEYEWCUKwAC]A]A]AqD?]A]AqC?_@A]?[A]A]Aa@A[CaAA]C_@ASUyCEy@i@kCESMc@Y}@gAiCo@wAa@cAo@aB]gAq@qCYwAYqAMe@Uq@M]GQOYOW?AGK]c@U[gAcB}@uAKSw@aB{@qBuAaDo@qAGOO]oEeKIYESAC?CAAEY?A?AAA?CES?GCI?A?CA??A?EKm@g@iCE[G[I]IYI[I_@K_@Ic@I_@Ic@Ms@s@uEGWCGEIEKOe@CGk@wAMUMWWe@Yc@Ua@Wa@{@}CMs@E]E[CYA]A[A_@A]?[@c@?a@@[@W?WB_@?YB[@[@Y@[B]BYB[DYD[D[D[F_@H]F]Ja@J_@HYJa@Rs@Ni@Z{@"
+              },
+              "start_location": {
+                "lat": 40.6779881,
+                "lng": -73.8974369
+              },
+              "travel_mode": "DRIVING"
+            },
+            {
+              "distance": {
+                "text": "1.3 mi",
+                "value": 2083
+              },
+              "duration": {
+                "text": "2 mins",
+                "value": 91
+              },
+              "end_location": {
+                "lat": 40.71848139999999,
+                "lng": -73.7943674
+              },
+              "html_instructions": "Merge onto <b>Grand Central Pkwy</b>",
+              "maneuver": "merge",
+              "polyline": {
+                "points": "ajowFjtpaMH[DWD]DYB[D]@[@[@]@]?[@]?[?i@Ak@CuBAw@Ay@?y@?UAsAAaBCqL?w@?y@Aw@@{@?y@@y@?w@By@@y@?y@@w@@y@AuA?y@Ay@Ay@Ak@AQCwAEoAK}CQeDI_BIiAAQAKUgCEu@KaACQUkBQ{AWsB[eBq@oDg@iC?AG[gAuF[{Aq@kCmAyE"
+              },
+              "start_location": {
+                "lat": 40.7160071,
+                "lng": -73.818457
+              },
+              "travel_mode": "DRIVING"
+            },
+            {
+              "distance": {
+                "text": "0.1 mi",
+                "value": 153
+              },
+              "duration": {
+                "text": "1 min",
+                "value": 12
+              },
+              "end_location": {
+                "lat": 40.7187142,
+                "lng": -73.7926092
+              },
+              "html_instructions": "Take exit <b>18</b> for <b>Utopia Pkwy</b>",
+              "maneuver": "ramp-right",
+              "polyline": {
+                "points": "oyowFx}kaMDM@CAE?EAICUE]CSC[Ee@I}@EYEYAI?KAO?U"
+              },
+              "start_location": {
+                "lat": 40.71848139999999,
+                "lng": -73.7943674
+              },
+              "travel_mode": "DRIVING"
+            },
+            {
+              "distance": {
+                "text": "492 ft",
+                "value": 150
+              },
+              "duration": {
+                "text": "1 min",
+                "value": 33
+              },
+              "end_location": {
+                "lat": 40.7188765,
+                "lng": -73.79088360000002
+              },
+              "html_instructions": "Merge onto <b>Grand Central Pkwy</b>",
+              "maneuver": "merge",
+              "polyline": {
+                "points": "}zowFxrkaMc@uBC[AYCU@a@@]B_@Bw@"
+              },
+              "start_location": {
+                "lat": 40.7187142,
+                "lng": -73.7926092
+              },
+              "travel_mode": "DRIVING"
+            },
+            {
+              "distance": {
+                "text": "279 ft",
+                "value": 85
+              },
+              "duration": {
+                "text": "1 min",
+                "value": 32
+              },
+              "end_location": {
+                "lat": 40.7196024,
+                "lng": -73.7905808
+              },
+              "html_instructions": "Turn <b>left</b> onto <b>Homelawn Street</b>",
+              "maneuver": "turn-left",
+              "polyline": {
+                "points": "_|owF~gkaMoA_@OGo@S"
+              },
+              "start_location": {
+                "lat": 40.7188765,
+                "lng": -73.79088360000002
+              },
+              "travel_mode": "DRIVING"
+            },
+            {
+              "distance": {
+                "text": "0.7 mi",
+                "value": 1136
+              },
+              "duration": {
+                "text": "3 mins",
+                "value": 186
+              },
+              "end_location": {
+                "lat": 40.7293779,
+                "lng": -73.7931622
+              },
+              "html_instructions": "Continue onto <b>Utopia Pkwy</b>",
+              "polyline": {
+                "points": "o`pwFbfkaMUO{@_@SIQEIAG?QA}A?iBC_A@qCHW@{AFQ@e@@Q@O@QBOFOFOFOHUNo@d@oAr@gAn@s@XOFMFQFGBIBa@JW@oCx@sBp@iBn@k@PeBf@MDqDhA"
+              },
+              "start_location": {
+                "lat": 40.7196024,
+                "lng": -73.7905808
+              },
+              "travel_mode": "DRIVING"
+            },
+            {
+              "distance": {
+                "text": "0.1 mi",
+                "value": 160
+              },
+              "duration": {
+                "text": "1 min",
+                "value": 42
+              },
+              "end_location": {
+                "lat": 40.7289338,
+                "lng": -73.79496809999999
+              },
+              "html_instructions": "Turn <b>left</b> onto <b>74th Ave</b>",
+              "maneuver": "turn-left",
+              "polyline": {
+                "points": "s}qwFfvkaMDVrApI"
+              },
+              "start_location": {
+                "lat": 40.7293779,
+                "lng": -73.7931622
+              },
+              "travel_mode": "DRIVING"
+            },
+            {
+              "distance": {
+                "text": "262 ft",
+                "value": 80
+              },
+              "duration": {
+                "text": "1 min",
+                "value": 25
+              },
+              "end_location": {
+                "lat": 40.7282259,
+                "lng": -73.7948332
+              },
+              "html_instructions": "Turn <b>left</b> onto <b>175th St</b><div style=\"font-size:0.9em\">Destination will be on the right</div>",
+              "maneuver": "turn-left",
+              "polyline": {
+                "points": "yzqwFpalaMjC["
+              },
+              "start_location": {
+                "lat": 40.7289338,
+                "lng": -73.79496809999999
+              },
+              "travel_mode": "DRIVING"
+            }
+          ],
+          "traffic_speed_entry": [],
+          "via_waypoint": []
+        }
+      ],
+      "overview_polyline": {
+        "points": "s}gwF~eibMTBJcGDuBHqD~Auu@vBobAd@wTPyJnAgm@F}CCu@b@iTLoCVgELoBRoCFuB?eGGoF?wCKuDm@HgEt@cDf@u@Ns@A]Am@GsFiB{A_@oBUoDGs@Iq@Iu@Sq@Wo@_@uA}@qCuB{CqCsF{FwD}C_GkE}HcGYU_@e@[g@Wo@Us@Q}@ScBoA{KwAaKiBmKS}Bs@aOMmCS{@[i@OOWOo@My@GWISMQSOWq@}BYq@a@g@_@YeAc@g@[eBuBmBmBoAmAW_@QY]{@WqAOuAw@aIYyBg@cBs@{Ay@aAcAw@iAe@cF}@sAWi@Qc@WiAw@cAiAw@yAm@_B_@}AWyAUuBKmBEgC@_CFkBLoB^iDNmBDsBKqBOuAMo@c@aBkAiDm@uB]oBg@sE]uBe@kBaAcC}@wAwAkBq@o@cAs@sCkB}@{@u@cAo@mAa@eA[mAY_BOmBE{@EkGCkFGyBKsC[sEo@_Dg@aBwBaFqAeD]gAq@qCs@iDc@wAUo@_@q@{@mAeCyDcAuBqCsGo@qAWm@yE_LG[OaAQeA_A_Fi@uBk@{C{@mFIQeAqCmAwBm@cA{@}CMs@Ky@Ew@EuBDyBP}ERkB\\uBh@yB^uAj@eBZkBLqBDuBEgFCaEG_T?gFFeF@aGEyEEiBQmFe@oI_@{Ew@{Gs@yEyAyHkBoJ_CeJFQGk@SsBW{BA[?Uc@uBEu@Aw@D}@Bw@oA_@_A[UO{@_@e@OQAoBAiDAwGTw@Ba@D_A`@eAt@wCbBcBp@QFa@JW@cGjBuC`AsBl@qDhADVrApIjC["
+      },
+      "summary": "Jackie Robinson Pkwy",
+      "warnings": [],
+      "waypoint_order": []
+    }
+  ],
+  "status": "OK"
+}
