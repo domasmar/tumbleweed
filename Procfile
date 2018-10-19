@@ -1,1 +1,1 @@
-web: target/universal/stage/bin/tumbleweed -Dhttp.port=${PORT}
+web: target/universal/stage/bin/tumbleweed -Dhttp.port=$PORT
