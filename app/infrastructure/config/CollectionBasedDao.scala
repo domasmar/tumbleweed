@@ -1,11 +1,11 @@
 package infrastructure.config
 
-import org.mongodb.scala.bson.collection.immutable.Document
-import org.mongodb.scala.{MongoCollection, MongoDatabase}
+import entity.Registries
+import org.mongodb.scala.MongoDatabase
 
-abstract class CollectionBasedDao(collectionName: String, databaseName: Option[String] = None)(implicit databaseConnector: DatabaseConnector) {
+abstract class CollectionBasedDao(databaseName: Option[String] = None)(implicit databaseConnector: DatabaseConnector) {
 
-  private val database: MongoDatabase = databaseConnector.getDatabase(databaseName)
+  val database: MongoDatabase = databaseConnector.getDatabase(databaseName)
+    .withCodecRegistry(Registries.codecRegistry)
 
-  val collection: MongoCollection[Document] = database.getCollection(collectionName)
 }

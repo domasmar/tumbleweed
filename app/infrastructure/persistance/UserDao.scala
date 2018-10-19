@@ -2,12 +2,13 @@ package infrastructure.persistance
 
 import infrastructure.config.{CollectionBasedDao, DatabaseConnector}
 import javax.inject.{Inject, Singleton}
-import org.mongodb.scala.{Completed, Observer}
 import org.mongodb.scala.bson.collection.immutable.Document
+import org.mongodb.scala.{Completed, MongoCollection, Observer}
 
 @Singleton
-class UserDao @Inject()(implicit databaseConnector: DatabaseConnector) extends CollectionBasedDao("users") {
+class UserDao @Inject()(implicit databaseConnector: DatabaseConnector) extends CollectionBasedDao() {
 
+  val collection: MongoCollection[Document] = database.getCollection("users")
 
   //just test method useless
   def insertUser() = {
