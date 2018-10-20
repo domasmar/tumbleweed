@@ -1,7 +1,7 @@
 import React from 'react';
 import { Icon } from 'expo';
 import {connect} from 'react-redux';
-import {Platform} from 'react-native';
+import {Platform, StyleSheet} from 'react-native';
 
 import {getDriverRoute, getLocation} from "../../store/driver/actions";
 
@@ -28,21 +28,12 @@ class MapScreen extends React.Component {
 
   componentWillMount() {
     this.props.getLocation();
-    this.props.getDriverRoute(
-      {
-        lat: 54.712684,
-        lng: 25.147928,
-      },
-      {
-        lat: 54.696464,
-        lng: 25.278759,
-      }
-    );
   }
 
   render() {
     if (!this.props.isLoading) {
       if (this.props.userLocation) {
+
         const {latitude, longitude} = this.props.userLocation.coords;
 
         const markers = [{
