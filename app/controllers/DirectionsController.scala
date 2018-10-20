@@ -18,8 +18,8 @@ class DirectionsController @Inject()(
     maybeLocation.flatMap(loc => directionsService.getRoad(loc.startLocation, loc.endLocation))
       .map(route => Ok(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(route)))
       .getOrElse(NotFound("route was not faund"))
-
   }
+
 
 
 }

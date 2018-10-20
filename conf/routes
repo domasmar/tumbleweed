@@ -21,3 +21,5 @@ GET         /pickuppoints/:lat/:long/:maxDistance        controllers.PickupPoint
 POST        /direction/route                             controllers.DirectionsController.route
 
 POST        /passanger/drivers/nearest                   controllers.PassengerController.getNearestDriverPaths
+
+POST        /driver/route/:routeId/status                controllers.DriverPathController.updatePathStatus(routeId: String, hide: Boolean)

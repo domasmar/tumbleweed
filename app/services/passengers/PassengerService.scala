@@ -12,7 +12,6 @@ class PassengerService @Inject()(implicit ec: ExecutionContext, driverPathServic
 
   private val DEFAULT_MAX_DISTANCE_M = 300
 
-
   def getNearestDriverRoads(startLocation: Point, endLocation: Point): Future[List[NearestDriverView]] = {
     driverPathService.getAllPaths
       .map(paths => getNearestRoutes(startLocation, endLocation, paths))
@@ -23,6 +22,7 @@ class PassengerService @Inject()(implicit ec: ExecutionContext, driverPathServic
     val nearestViews: List[NearestDriverView] =
       allRoutes
         .filterNot(_.hidden)
+        .filter(path => validDirections(startLocation, endLocation, path))
         .map(path => (DriverInfo(path.driverId, path.carId, path.routeId.get), path.route))
         .map {
           case (driverInfo, route) =>
@@ -34,5 +34,11 @@ class PassengerService @Inject()(implicit ec: ExecutionContext, driverPathServic
     nearestViews
       .filter(r => r.distFromEndLocation < DEFAULT_MAX_DISTANCE_M && r.distFromStartLocation < DEFAULT_MAX_DISTANCE_M)
       .sortBy(r => r.distFromStartLocation + r.distFromEndLocation)
+  }
+
+  private def validDirections(startLocation: Point, endLocation: Point, driverPath: DriverPath): Boolean = {
+    val origin = StartEndLocation(startLocation, endLocation)
+    val validatable = StartEndLocation(driverPath.route.startLocation, driverPath.route.endLocation)
+    MapHelper.isSameDirection(origin, validatable)
   }
 }
