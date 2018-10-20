@@ -21,6 +21,7 @@ class DirectionsController @Inject()(
 
   }
 
-  case class StartEndLocation(startLocation: Point, endLocation: Point)
 
 }
+
+case class StartEndLocation(startLocation: Point, endLocation: Point)
