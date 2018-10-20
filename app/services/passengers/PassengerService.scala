@@ -23,7 +23,7 @@ class PassengerService @Inject()(implicit ec: ExecutionContext, driverPathServic
     val nearestViews: List[NearestDriverView] =
       allRoutes
         .filterNot(_.hidden)
-        .map(path => (DriverInfo(path.driverId, path.carId), path.route))
+        .map(path => (DriverInfo(path.driverId, path.carId, path.routeId.get), path.route))
         .map {
           case (driverInfo, route) =>
             val shortestDistanceToStart = MapHelper.findNearestRoutePointToPoint(startLocation, route)
