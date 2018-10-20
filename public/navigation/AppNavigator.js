@@ -6,13 +6,20 @@ import DriverNavigator from './DriverNavigator';
 import PassengerNavigator from './PassengerNavigator';
 
 
-const RootStack = createStackNavigator({
-  Landing: {
-    screen: LandingPage,
+const RootStack = createStackNavigator(
+  {
+    Landing: {
+      screen: LandingPage,
+    },
+    Passenger: PassengerNavigator,
+    Driver: DriverNavigator,
   },
-  Passenger: PassengerNavigator,
-  Driver: DriverNavigator,
-});
+  {
+    headerMode: 'none',
+    navigationOptions: {
+      headerVisible: false,
+    }
+  });
 export default class App extends React.Component {
   render() {
     return <RootStack/>;
