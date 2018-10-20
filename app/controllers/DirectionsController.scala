@@ -1,6 +1,6 @@
 package controllers
 
-import entity.Point
+import entity.{Point, StartEndLocation}
 import javax.inject.{Inject, Singleton}
 import play.api.mvc.{AbstractController, AnyContent, ControllerComponents, Request}
 import services.map.api.GoogleDirectionsService
@@ -23,5 +23,3 @@ class DirectionsController @Inject()(
 
 
 }
-
-case class StartEndLocation(startLocation: Point, endLocation: Point)
