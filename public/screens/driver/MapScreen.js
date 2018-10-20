@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { Icon } from 'expo';
 import {connect} from 'react-redux';
 import {Platform, StyleSheet, View} from 'react-native';
 
@@ -10,9 +10,6 @@ import MapView from '../../components/MapView';
 import ErrorView from '../../components/Error';
 import LoadingView from '../../components/Loading';
 import Autocomplete from "../../components/Autocomplete";
-
-import { Icon } from 'react-native-elements';
-
 
 class MapScreen extends React.Component {
   static navigationOptions = {
@@ -60,10 +57,11 @@ class MapScreen extends React.Component {
 
         const renderCurrentLocation = () => {
           return (
-            <Icon
-              reverse
-              size={ 13 }
-              name='my-location'
+            <Icon.Ionicons
+              style={styles.currLocationButton}
+              size={ 34 }
+              name={Platform.OS === 'ios' ? 'ios-locate-outline' : 'md-locate'}
+              color={Colors.tabIconDefault}
               onPress={() =>
                 this.selection.from = {
                   lat: latitude,
@@ -95,7 +93,6 @@ class MapScreen extends React.Component {
           }
         };
 
-
         return (
           <React.Fragment>
             <MapView
@@ -118,6 +115,13 @@ class MapScreen extends React.Component {
     return <LoadingView/>;
   }
 }
+
+
+const styles = StyleSheet.create({
+  currLocationButton: {
+    marginTop: 12,
+  },
+});
 
 const mapStateToProps = ({ isLoading, userLocation, driverRoutes }) => {
   return {
