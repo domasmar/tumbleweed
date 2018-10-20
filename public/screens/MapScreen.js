@@ -1,15 +1,15 @@
 import React from 'react';
 
-import { connect } from 'react-redux';
-import {Platform, StyleSheet, View} from 'react-native';
+import {connect} from 'react-redux';
+import {Platform, StyleSheet} from 'react-native';
 
-import { getLocation, getDriverRoute } from "../store/actions";
+import {getDriverRoute, getLocation} from "../store/actions";
 
 import Colors from '../constants/Colors';
 import MapView from '../components/MapView';
 import ErrorView from '../components/Error';
 import LoadingView from '../components/Loading';
-import Autocomplete from '../components/Autocomplete';
+import Autocomplete from "../components/Autocomplete";
 
 
 class MapScreen extends React.Component {
@@ -34,7 +34,7 @@ class MapScreen extends React.Component {
   render() {
     if (!this.props.isLoading) {
       if (this.props.userLocation) {
-        const { latitude, longitude } = this.props.userLocation.coords;
+        const {latitude, longitude} = this.props.userLocation.coords;
 
         const marker = {
           latitude,
@@ -48,22 +48,21 @@ class MapScreen extends React.Component {
         };
 
         return (
-          <View styles={styles.container}>
-            <Autocomplete />
+          <React.Fragment>
             <MapView
-              latitude={ latitude }
-              longitude={ longitude }
-              zoom={ 0.005 }
-              markerArr={[ marker ]}
+              latitude={latitude}
+              longitude={longitude}
+              zoom={0.005}
+              markerArr={[marker]}
               polylines={this.props.driverRoutes}
             />
-          </View>
-        );
+            <Autocomplete/>
+          </React.Fragment>);
       } else {
-        return <ErrorView errorMessage={'Permission to access location was denied'} />
+        return <ErrorView errorMessage={'Permission to access location was denied'}/>
       }
     }
-    return <LoadingView />;
+    return <LoadingView/>;
   }
 }
 
@@ -76,10 +75,10 @@ const styles = StyleSheet.create({
 
 
 const mapStateToProps = ({
-  isLoading,
-  userLocation,
-  driverRoutes,
-}) => {
+                           isLoading,
+                           userLocation,
+                           driverRoutes,
+                         }) => {
   return {
     isLoading,
     userLocation,
