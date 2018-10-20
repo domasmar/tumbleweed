@@ -12,9 +12,14 @@ case class Point(lat: Double, lng: Double) {
 
 case class DriverPath(
                        driverId: String,
-                       startLabel: String,
-                       endLabel: String,
-                       route: Route
+                       carId: String,
+                       startLabel: Option[String],
+                       endLabel: Option[String],
+                       route: Route,
+                       `type`: PathType,
+                       hidden: Boolean = false,
+                       active: Boolean = true,
+                       _id: Option[String] = None,
                      )
 
 object Point {
@@ -49,3 +54,26 @@ case class Route(
                   routeSteps: List[Point]
                 )
 
+sealed case class PathType(value: String) {
+  override def toString: String = value
+}
+
+object PathType {
+
+  object LONG_TERM extends PathType("LONG_TERM")
+
+  object SHORT_TERM extends PathType("SHORT_TERM")
+
+}
+
+
+case class NearestDriverView(
+                              driverInfo: DriverInfo,
+                              distFromStartLocation: Int,
+                              distFromEndLocation: Int
+                            )
+
+case class DriverInfo(driverId: String,
+                      carId: String)
+
+case class StartEndLocation(startLocation: Point, endLocation: Point)

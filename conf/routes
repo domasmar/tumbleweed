@@ -4,17 +4,20 @@
 # ~~~~
 
 # Map static resources from the /public folder to the /assets URL path
-GET        /assets/*file                                controllers.Assets.versioned(path="/public", file: Asset)
+GET         /assets/*file                                controllers.Assets.versioned(path="/public", file: Asset)
 
 
 # An example controller showing a sample home page
-GET        /                                            controllers.HomeController.index
-GET        /chat                                        chat.ChatController.chatSocket
+GET         /                                            controllers.HomeController.index
+GET         /chat                                        chat.ChatController.chatSocket
 
-GET        /driverpath/:driverId                       controllers.DriverPathController.getDrivers(driverId: String)
-POST       /driverpath                                 controllers.DriverPathController.save
+GET         /driver/:driverId/paths                      controllers.DriverPathController.getDriverPaths(driverId: String)
+POST        /driver/path                                 controllers.DriverPathController.save
 
-GET        /pickuppoints/all                            controllers.PickupPointController.getAll()
-GET        /pickuppoints/:lat/:long/:maxDistance        controllers.PickupPointController.get(lat: Double, long: Double, maxDistance: Double)
+GET         /pickuppoints/all                            controllers.PickupPointController.getAll()
+GET         /pickuppoints/:lat/:long/:maxDistance        controllers.PickupPointController.get(lat: Double, long: Double, maxDistance: Double)
 
+#route poly needed data by start end point
 POST        /direction/route                             controllers.DirectionsController.route
+
+POST        /passanger/drivers/nearest                   controllers.PassengerController.getNearestDriverPaths
