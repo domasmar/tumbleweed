@@ -19,16 +19,16 @@ export default class MapViewComponent extends React.Component {
     }
   }
 
-  renderPolyline(polyline) {
+  renderPolyline(polyline, idx) {
+    const coords = polyline.routeSteps.map(step => ({
+      latitude: step.lat,
+      longitude: step.lng,
+    }));
     return (
       <MapView.Polyline
-        coordinates={
-          polyline.routeSteps.map(step => ({
-            latitude: step.lat,
-            longitude: step.lng,
-          }))
-        }
-        strokeWidth={10}
+        key={idx}
+        coordinates={coords}
+        strokeWidth={6}
         strokeColor="#00a8ff"
         lineCap="round"
       />
@@ -54,8 +54,8 @@ export default class MapViewComponent extends React.Component {
           }}
         >
           {
-            this.props.polylines.map(polyline => {
-              this.renderPolyline(polyline);
+            this.props.polylines.map((polyline, index) => {
+              return this.renderPolyline(polyline, index);
             })
           }
           {
