@@ -30,9 +30,8 @@ export default class Autocomplete extends React.Component {
           }}
           GoogleReverseGeocodingQuery={{
             latlng: '54.6872,25.2797', // vilnius
-            rankby: 'distance',
+            rankby: 'distance'
           }}
-          GooglePlacesSearchQuery={{}}
           placeholder={this.props.placeholder}
           listViewDisplayed='auto'
           onPress={(data, details = null) => {
@@ -40,9 +39,24 @@ export default class Autocomplete extends React.Component {
             // console.info(data, details);
             onSelect(details.geometry.location);
           }}
-          renderRightButton={renderRightButton}
+          renderRightButton={ renderRightButton }
           nearbyPlacesAPI={'GoogleReverseGeocoding'}
           fetchDetails={true}
+          styles={{
+            container: {
+              backgroundColor: '#fff',
+            },
+            textInput: {
+              padding: 0,
+              height: 50,
+            },
+            textInputContainer: {
+              padding: 0,
+              height: 60,
+              backgroundColor: '#fff',
+              paddingRight: 15,
+            }
+          }}
         />
       </View>
     );
