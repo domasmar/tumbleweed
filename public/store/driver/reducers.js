@@ -1,4 +1,6 @@
-import { combineReducers } from 'redux'
+import { combineReducers, applyMiddleware, createStore } from 'redux';
+import thunkMiddleware from "redux-thunk";
+
 import {
   SET_ROUTE,
   IS_LOADING,
@@ -32,10 +34,17 @@ function userLocation(state = null, action) {
   }
 }
 
-const rootReducer = combineReducers({
+const reducers = combineReducers({
   isLoading,
   userLocation,
   driverRoutes,
 });
 
-export default rootReducer;
+const store = createStore(
+  reducers,
+  applyMiddleware(
+    thunkMiddleware,
+  ),
+);
+
+export default store;

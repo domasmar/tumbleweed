@@ -3,14 +3,14 @@ import { Platform } from 'react-native';
 import { createStackNavigator, createBottomTabNavigator } from 'react-navigation';
 
 import TabBarIcon from '../components/TabBarIcon';
-import MapScreen from '../screens/MapScreen';
+import MapScreen from '../screens/passenger/MapScreen';
 
 const MapStack = createStackNavigator({
     Map: MapScreen,
 });
 
 MapStack.navigationOptions = {
-    tabBarLabel: 'Search route',
+    tabBarLabel: 'Passenger route',
     tabBarIcon: ({ focused }) => (
         <TabBarIcon
             focused={focused}

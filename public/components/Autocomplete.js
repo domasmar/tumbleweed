@@ -4,7 +4,17 @@ import {StyleSheet, View} from "react-native";
 // import { StyleSheet, View, TextInput } from "react-native";
 
 export default class Autocomplete extends React.Component {
+
+  constructor(props) {
+    super(props);
+  }
+
   render() {
+    const {
+      currentLocation,
+      renderRightButton
+    } = this.props;
+
     return (
       <View style={styles.container}>
         <GooglePlacesAutocomplete
@@ -16,7 +26,17 @@ export default class Autocomplete extends React.Component {
             language: 'lt', // language of the results
             types: 'address' // default: 'geocode'
           }}
+          GooglePlacesSearchQuery={{
+            location: '54.6872,25.2797', // vilnius
+            rankby: 'distance',
+            types: 'food',
+          }}
+          placeholder={this.props.placeholder}
           listViewDisplayed='auto'
+          onPress={(data, details = null) => {
+            console.info(data, details);
+          }}
+          renderRightButton={ renderRightButton }
         />
       </View>
     );
@@ -26,14 +46,11 @@ export default class Autocomplete extends React.Component {
 const styles = StyleSheet.create({
   container: {
     position: 'absolute',
-    left: 0,
-    right: 0,
-    top: 20,
+    top: 0,
     width: '100%',
     height: 'auto',
     flex: 1,
     alignItems: 'stretch',
-    backgroundColor: '#fff',
     zIndex: 4,
   },
 });
