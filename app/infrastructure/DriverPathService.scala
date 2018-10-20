@@ -1,6 +1,6 @@
 package infrastructure
 
-import entity.DriverPath
+import entity.{DriverPath, DriverPathView}
 import infrastructure.persistance.DriverPathDao
 import javax.inject.Inject
 
@@ -12,8 +12,13 @@ class DriverPathService @Inject()(driverPathDao: DriverPathDao)(implicit ec: Exe
   }
 
 
-  def getAll(driverId: String): Future[List[DriverPath]] = {
+  def getByRouteId(routeId: String): Future[DriverPath] = {
+    driverPathDao.getById(routeId)
+  }
+
+  def getAll(driverId: String): Future[List[DriverPathView]] = {
     driverPathDao.getByDriver(driverId)
+      .map(paths => paths.map(DriverPathView(_)))
   }
 
   def getAllPaths: Future[List[DriverPath]] = driverPathDao.getAll()

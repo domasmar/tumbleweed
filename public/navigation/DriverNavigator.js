@@ -6,6 +6,7 @@ import TabBarIcon from '../components/TabBarIcon';
 import MapScreen from '../screens/driver/MapScreen';
 import RoutesList from '../screens/driver/RoutesScreen';
 import MyProfile from '../screens/driver/MyProfile';
+import ChatScreen from "../screens/ChatScreen";
 
 const MyProfileStack = createStackNavigator({
   Profile: MyProfile
@@ -49,8 +50,23 @@ RoutesListStack.navigationOptions = {
   ),
 };
 
+const ChatListStack = createStackNavigator({
+  ChatScreen: ChatScreen,
+});
+
+ChatListStack.navigationOptions = {
+  tabBarLabel: 'Chat',
+  tabBarIcon: ({focused}) => (
+    <TabBarIcon
+      focused={focused}
+      name={Platform.OS === 'ios' ? `ios-chatboxes${focused ? '' : '-outline'}` : 'md-chatboxes'}
+    />
+  ),
+};
+
 export default createBottomTabNavigator({
   MyProfileStack,
   MapStack,
   RoutesListStack,
+  ChatListStack,
 });

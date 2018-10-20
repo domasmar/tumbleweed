@@ -1,6 +1,7 @@
 package controllers
 
-import entity.{Point, StartEndLocation}
+import entity.StartEndLocation
+import infrastructure.DriverPathService
 import javax.inject.{Inject, Singleton}
 import play.api.mvc.{AbstractController, AnyContent, ControllerComponents, Request}
 import services.map.api.GoogleDirectionsService
@@ -10,7 +11,8 @@ import scala.concurrent.ExecutionContext
 @Singleton
 class DirectionsController @Inject()(
                                       cc: ControllerComponents,
-                                      directionsService: GoogleDirectionsService)
+                                      directionsService: GoogleDirectionsService,
+                                      driverPathService: DriverPathService)
                                     (implicit ex: ExecutionContext) extends AbstractController(cc) with Mapper {
 
   def route() = Action { implicit request: Request[AnyContent] =>
@@ -20,6 +22,12 @@ class DirectionsController @Inject()(
       .getOrElse(NotFound("route was not faund"))
   }
 
+
+  def routeGet(routeId: String) = Action.async { implicit request: Request[AnyContent] =>
+    driverPathService.getByRouteId(routeId).map { route =>
+      Ok(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(route))
+    }
+  }
 
 
 }
