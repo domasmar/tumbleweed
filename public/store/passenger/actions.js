@@ -30,6 +30,15 @@ export function setSelectedRoute(route) {
   }
 }
 
+export function setPassenger(passenger) {
+  return function(dispatch) {
+    dispatch({
+      type: 'passenger',
+      passenger
+    })
+  }
+}
+
 export function getDriversList(startLocation, endLocation) {
   return async function(dispatch) {
     dispatch(isLoading(true));

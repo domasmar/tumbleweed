@@ -19,33 +19,6 @@ function driversList(state = [], action) {
       return action.drivers;
     default:
       return state;
-    // [ {
-    //   "distFromEndLocation": 226,
-    //   "distFromStartLocation": 30,
-    //   "driverInfo": {
-    //     "carId": "HAK-777",
-    //     "driverId": "wozniak",
-    //     "routeId": "driver-4442018-10-20T18:35:26.722"
-    //   },
-    // },
-    //   {
-    //     "distFromEndLocation": 226,
-    //     "distFromStartLocation": 30,
-    //     "driverInfo": {
-    //       "carId": "HAK-777",
-    //       "driverId": "bill",
-    //       "routeId": "driver-4442018-10-20T18:35:26.722"
-    //     },
-    //   },
-    //   {
-    //     "distFromEndLocation": 226,
-    //     "distFromStartLocation": 30,
-    //     "driverInfo": {
-    //       "carId": "HAK-777",
-    //       "driverId": "steve",
-    //       "routeId": "driver-4442018-10-20T18:35:26.722"
-    //     },
-    //   }];
   }
 }
 
@@ -67,11 +40,21 @@ function selectedRoute(state = {routeSteps: []}, action) {
   }
 }
 
+function passenger(state = null, action) {
+  switch (action.type) {
+    case 'passenger':
+      return action.passenger;
+    default:
+      return state;
+  }
+}
+
 const reducers = combineReducers({
   isLoading,
   driversList,
   userLocation,
   selectedRoute,
+  passenger,
 });
 
 const store = createStore(
