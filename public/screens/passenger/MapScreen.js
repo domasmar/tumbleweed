@@ -133,7 +133,7 @@ class MapScreen extends React.Component {
               longitude={longitude}
               zoom={0.005}
               markerArr={markers}
-              polylines={this.props.driverRoutes}
+              polylines={[this.props.selectedRoute]}
             />
 
           </React.Fragment>);
@@ -152,11 +152,12 @@ const styles = StyleSheet.create({
   },
 });
 
-const mapStateToProps = ({isLoading, userLocation, driversList}) => {
+const mapStateToProps = ({isLoading, userLocation, driversList, selectedRoute}) => {
   return {
     isLoading,
     userLocation,
     driversList,
+    selectedRoute,
   };
 };
 

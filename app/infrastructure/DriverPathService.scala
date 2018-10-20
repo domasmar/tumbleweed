@@ -12,6 +12,10 @@ class DriverPathService @Inject()(driverPathDao: DriverPathDao)(implicit ec: Exe
   }
 
 
+  def getByRouteId(routeId: String): Future[DriverPath] = {
+    driverPathDao.getById(routeId)
+  }
+
   def getAll(driverId: String): Future[List[DriverPath]] = {
     driverPathDao.getByDriver(driverId)
   }

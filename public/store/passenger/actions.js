@@ -17,6 +17,19 @@ function setDriverList(drivers) {
   };
 }
 
+function selectedRoute(route) {
+  return {
+    type: 'selectedRoute',
+    route
+  }
+}
+
+export function setSelectedRoute(route) {
+  return function(dispatch) {
+    dispatch(selectedRoute(route))
+  }
+}
+
 export function getDriversList(startLocation, endLocation) {
   return async function(dispatch) {
     dispatch(isLoading(true));

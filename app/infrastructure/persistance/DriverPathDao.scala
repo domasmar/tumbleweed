@@ -9,10 +9,10 @@ import org.mongodb.scala.MongoCollection
 import org.mongodb.scala.model.Filters.equal
 import org.mongodb.scala.model.Updates._
 
-
 import scala.concurrent.{ExecutionContext, Future, Promise}
 
 class DriverPathDao @Inject()(implicit databaseConnector: DatabaseConnector, ec: ExecutionContext) extends CollectionBasedDao() {
+
 
   val collection: MongoCollection[DriverPath] = database.getCollection("driver_paths")
 
@@ -25,6 +25,12 @@ class DriverPathDao @Inject()(implicit databaseConnector: DatabaseConnector, ec:
     val p = Promise[List[DriverPath]]()
     collection.find().subscribe(accumulateObserver(p))
     p.future
+  }
+
+  def getById(routeId: String): Future[DriverPath] = {
+    val p = Promise[List[DriverPath]]()
+    collection.find(equal("routeId", routeId)).subscribe(accumulateObserver(p))
+    p.future.map(_.head)
   }
 
   def getByDriver(userId: String): Future[List[DriverPath]] = {
