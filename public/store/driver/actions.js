@@ -110,14 +110,15 @@ function setDriverTo(to) {
 export function saveRoute() {
   return async function (dispatch, props) {
     const {
-      driverRoutes
+      driverRoutes,
+      driver
     } = props();
     const route = driverRoutes[0];
 
     dispatch(isLoading(true));
 
-    console.info(route.startLocation);
-    console.info(route.endLocation);
+    // console.info(route.startLocation);
+    // console.info(route.endLocation);
 
     const startUrl = "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + [route.startLocation.lat, route.startLocation.lng].join(',') + "&key=" + "AIzaSyBpDvGSJUey9dg2tTZURDcYSNPi35lp8Vs";
     const endUrl = "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + [route.endLocation.lat, route.endLocation.lng].join(',') + "&key=" + "AIzaSyBpDvGSJUey9dg2tTZURDcYSNPi35lp8Vs";
@@ -129,8 +130,8 @@ export function saveRoute() {
     const endLabel = end.data.results[0].formatted_address;
 
     const routeRequest = {
-      driverId: 'driver-444',
-      carId: 'HAK-777',
+      driverId: driver.driverId,
+      carId: driver.number,
       startLabel: startLabel,
       endLabel: endLabel,
       route: route,
@@ -143,5 +144,14 @@ export function saveRoute() {
 
 
     dispatch(isLoading(false));
+  }
+}
+
+export function setDriver(driver) {
+  return function (dispatch) {
+    dispatch({
+      type: 'driver',
+      driver: driver
+    })
   }
 }

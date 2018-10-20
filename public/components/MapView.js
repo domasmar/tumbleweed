@@ -1,4 +1,4 @@
-import { Icon, MapView, Polyline } from "expo";
+import {Icon, MapView, Polyline} from "expo";
 import React from "react";
 
 export default class MapViewComponent extends React.Component {
@@ -16,7 +16,7 @@ export default class MapViewComponent extends React.Component {
   }
 
   onMapLayout = () => {
-    this.setState({ isMapReady: true });
+    this.setState({isMapReady: true});
   };
 
   renderMarker(marker) {
@@ -29,13 +29,13 @@ export default class MapViewComponent extends React.Component {
         }}
         title={marker.title}
       >
-        { this.renderIcon(marker) }
+        {this.renderIcon(marker)}
       </MapView.Marker>
     );
   }
 
   renderIcon(marker) {
-    if(marker.icon) {
+    if (marker.icon) {
       const {
         name,
         size,
@@ -78,7 +78,7 @@ export default class MapViewComponent extends React.Component {
       return (
         <MapView
           ref={this.mapRef}
-          style={{ flex: 1 }}
+          style={{flex: 1}}
           initialRegion={{
             latitude,
             longitude,

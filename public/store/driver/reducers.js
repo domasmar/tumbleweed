@@ -1,13 +1,7 @@
-import { combineReducers, applyMiddleware, createStore } from 'redux';
+import {applyMiddleware, combineReducers, createStore} from 'redux';
 import thunkMiddleware from "redux-thunk";
 
-import {
-  SET_ROUTE,
-  IS_LOADING,
-  SET_LOCATION,
-  SET_DRIVER_FROM,
-  SET_DRIVER_TO
-} from "./actions";
+import {IS_LOADING, SET_DRIVER_FROM, SET_DRIVER_TO, SET_LOCATION, SET_ROUTE} from "./actions";
 
 function isLoading(state = false, action) {
   switch (action.type) {
@@ -54,12 +48,22 @@ function driverTo(state = null, action) {
   }
 }
 
+function driver(state = null, action) {
+  switch (action.type) {
+    case 'driver':
+      return action.driver;
+    default:
+      return state;
+  }
+}
+
 const reducers = combineReducers({
   isLoading,
   userLocation,
   driverRoutes,
   driverFrom,
-  driverTo
+  driverTo,
+  driver
 });
 
 const store = createStore(
