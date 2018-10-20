@@ -32,6 +32,7 @@ class PassengerService @Inject()(implicit ec: ExecutionContext, driverPathServic
         }
 
     nearestViews
-      .sortBy(r => (r.distFromStartLocation, r.distFromEndLocation))
+      .filter(r => r.distFromEndLocation < DEFAULT_MAX_DISTANCE_M && r.distFromStartLocation < DEFAULT_MAX_DISTANCE_M)
+      .sortBy(r => r.distFromStartLocation + r.distFromEndLocation)
   }
 }
