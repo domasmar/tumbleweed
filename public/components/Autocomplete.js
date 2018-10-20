@@ -4,7 +4,17 @@ import {StyleSheet, View} from "react-native";
 // import { StyleSheet, View, TextInput } from "react-native";
 
 export default class Autocomplete extends React.Component {
+
+  constructor(props) {
+    super(props);
+  }
+
   render() {
+    const {
+      currentLocation,
+      renderRightButton
+    } = this.props;
+
     return (
       <View style={styles.container}>
         <GooglePlacesAutocomplete
@@ -25,6 +35,7 @@ export default class Autocomplete extends React.Component {
           onPress={(data, details = null) => {
             console.info(data, details);
           }}
+          renderRightButton={ renderRightButton }
         />
       </View>
     );

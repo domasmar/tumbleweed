@@ -1,7 +1,7 @@
 import React from 'react';
 
 import {connect} from 'react-redux';
-import {Platform, StyleSheet} from 'react-native';
+import {Platform, StyleSheet, View} from 'react-native';
 
 import {getDriverRoute, getLocation} from "../store/actions";
 
@@ -11,11 +11,22 @@ import ErrorView from '../components/Error';
 import LoadingView from '../components/Loading';
 import Autocomplete from "../components/Autocomplete";
 
+import { Icon } from 'react-native-elements';
+
 
 class MapScreen extends React.Component {
   static navigationOptions = {
     header: null,
   };
+
+  constructor(props) {
+    super(props)
+
+    this.selection = {
+      from: null,
+      to: null
+    }
+  }
 
   componentWillMount() {
     this.props.getLocation();
@@ -47,6 +58,39 @@ class MapScreen extends React.Component {
           title: 'You are here',
         };
 
+        const renderCurrentLocation = () => {
+          return (
+            <Icon
+              reverse
+              size={ 13 }
+              name='my-location'
+              onPress={() =>
+                this.selection.from = {
+                  lat: latitude,
+                  lng: longitude
+                }
+              }
+            />
+          );
+        };
+
+        const renderFromAutocomplete = () => {
+          if (this.selection.from === null) {
+            return (
+              <Autocomplete renderRightButton={ renderCurrentLocation }/>
+            );
+          }
+        };
+
+        const renderToAutocomplete = () => {
+          if (this.selection.from !== null && this.selection.to === null) {
+            return (
+              <Autocomplete/>
+            );
+          }
+        };
+
+
         return (
           <React.Fragment>
             <MapView
@@ -56,7 +100,11 @@ class MapScreen extends React.Component {
               markerArr={[marker]}
               polylines={this.props.driverRoutes}
             />
-            <Autocomplete/>
+
+            {renderFromAutocomplete()}
+
+            {renderToAutocomplete()}
+
           </React.Fragment>);
       } else {
         return <ErrorView errorMessage={'Permission to access location was denied'}/>
