@@ -1,17 +1,14 @@
 import React from 'react';
 
 
-import {setDriver} from "../../store/driver/actions";
-import Drivers from '../Drivers';
+import {setPassenger} from "../../store/passenger/actions";
+import Passengers from '../Passengers';
 
 import connect from "react-redux/es/connect/connect";
 import {Avatar, ListItem} from 'react-native-elements';
 import {View} from "react-native";
 
 export class MyProfile extends React.Component {
-  static navigationOptions = {
-    title: 'Account',
-  };
 
   static navigationOptions = {
     header: null,
@@ -20,33 +17,28 @@ export class MyProfile extends React.Component {
   constructor(props) {
     super(props);
 
-    const randomDriver = Drivers[Math.floor(Math.random() * Drivers.length)]
-    this.props.setDriver({...randomDriver})
+    const randomPassenger = Passengers[Math.floor(Math.random() * Passengers.length)]
+    this.props.setPassenger({...randomPassenger})
   }
 
   render() {
-    const driver = this.props.driver;
-    if (!driver) {
+    const passenger = this.props.passenger;
+    if (!passenger) {
       return (<View/>)
     }
     return (
       <React.Fragment>
         <View style={{paddingTop: 20, paddingLeft: 20, paddingRight: 20}}>
           <Avatar
-            large
+            xlarge
             size={150}
             rounded
-            source={{uri: driver.picture}}
+            source={{uri: passenger.picture}}
             activeOpacity={0.7}
           />
           <ListItem
             key='name'
-            title={driver.name}
-            hideChevron={true}
-          />
-          <ListItem
-            key='number'
-            title={driver.number}
+            title={passenger.name}
             hideChevron={true}
           />
         </View>
@@ -56,14 +48,14 @@ export class MyProfile extends React.Component {
 
 }
 
-const mapStateToProps = ({driver}) => {
+const mapStateToProps = ({passenger}) => {
   return {
-    driver
+    passenger
   };
 };
 
 const mapDispatchToProps = {
-  setDriver
+  setPassenger
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(MyProfile);

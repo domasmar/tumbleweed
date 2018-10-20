@@ -41,7 +41,7 @@ class MapScreen extends React.Component {
   async save() {
     await this.props.saveRoute();
     this.clear();
-    this.props.navigation.navigate('RoutesList');
+    this.props.navigation.navigate('RoutesListStack');
   }
 
   clear() {
@@ -132,8 +132,8 @@ class MapScreen extends React.Component {
               <Button
                 title={'Save'}
                 color={Colors.tintColor}
-                onPress={() => {
-                  this.save()
+                onPress={async () => {
+                  await this.save();
                 }}/>
             </View>
           </View>

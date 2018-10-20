@@ -33,7 +33,6 @@ export function getLocation() {
 export const SET_ROUTE = 'SET_ROUTE';
 
 function setRoute(route) {
-  console.info("setRoute", route);
   return {
     type: SET_ROUTE,
     route,
@@ -42,7 +41,6 @@ function setRoute(route) {
 
 export function getDriverRoute(startLocation, endLocation) {
   return async function (dispatch) {
-    console.info("getDriverRoute", startLocation, endLocation);
     dispatch(isLoading(true));
     const [err, route] = await to(axios.post('https://tumbleweed-hack.herokuapp.com/direction/route', {
       startLocation,
@@ -130,7 +128,7 @@ export function saveRoute() {
     const endLabel = end.data.results[0].formatted_address;
 
     const routeRequest = {
-      driverId: driver.driverId,
+      driverId: driver.userId,
       carId: driver.number,
       startLabel: startLabel,
       endLabel: endLabel,
@@ -140,9 +138,7 @@ export function saveRoute() {
       active: true
     };
 
-    const [err, reponse] = await to(axios.post('https://tumbleweed-hack.herokuapp.com/driver/path', routeRequest));
-
-
+    await to(axios.post('https://tumbleweed-hack.herokuapp.com/driver/path', routeRequest));
     dispatch(isLoading(false));
   }
 }
@@ -154,4 +150,26 @@ export function setDriver(driver) {
       driver: driver
     })
   }
+}
+
+export const GET_DRIVER_ROUTES = 'GET_DRIVER_ROUTES';
+
+function setDriverRoutesHistory(routes) {
+  return {
+    type: GET_DRIVER_ROUTES,
+    routes,
+  };
+}
+
+export function getDriverRoutesHistory(driver = {}) {
+  return async function (dispatch) {
+    dispatch(isLoading(true));
+    const [err, routes] = await to(axios.get(`https://tumbleweed-hack.herokuapp.com/driver/${driver.userId}/paths`));
+    if (!err && routes) {
+      dispatch(setDriverRoutesHistory(routes.data));
+    } else {
+    //   console.error(err);
+    }
+    dispatch(isLoading(false));
+  };
 }

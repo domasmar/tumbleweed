@@ -9,64 +9,64 @@ import MyProfile from '../screens/driver/MyProfile';
 import ChatScreen from "../screens/ChatScreen";
 
 const MyProfileStack = createStackNavigator({
-    Profile: MyProfile
+  Profile: MyProfile
 });
 
 MyProfileStack.navigationOptions = {
-    tabBarLabel: 'My Profile',
-    tabBarIcon: ({focused}) => (
-        <TabBarIcon
-            focused={focused}
-            name={Platform.OS === 'ios' ? `ios-hammer${focused ? '' : '-outline'}` : 'md-hammer'}
-        />
-    ),
+  tabBarLabel: 'My Profile',
+  tabBarIcon: ({focused}) => (
+    <TabBarIcon
+      focused={focused}
+      name={Platform.OS === 'ios' ? `ios-hammer${focused ? '' : '-outline'}` : 'md-hammer'}
+    />
+  ),
 };
 
 const MapStack = createStackNavigator({
-    Map: MapScreen,
+  Map: MapScreen,
 });
 
 MapStack.navigationOptions = {
-    tabBarLabel: 'New Route',
-    tabBarIcon: ({focused}) => (
-        <TabBarIcon
-            focused={focused}
-            name={Platform.OS === 'ios' ? `ios-car${focused ? '' : '-outline'}` : 'md-car'}
-        />
-    ),
+  tabBarLabel: 'New Route',
+  tabBarIcon: ({focused}) => (
+    <TabBarIcon
+      focused={focused}
+      name={Platform.OS === 'ios' ? `ios-car${focused ? '' : '-outline'}` : 'md-car'}
+    />
+  ),
 };
 
 const RoutesListStack = createStackNavigator({
-    RoutesList: RoutesList,
+  RoutesList: RoutesList,
 });
 
 RoutesListStack.navigationOptions = {
-    tabBarLabel: 'Routes',
-    tabBarIcon: ({focused}) => (
-        <TabBarIcon
-            focused={focused}
-            name={Platform.OS === 'ios' ? `ios-list-box${focused ? '' : '-outline'}` : 'md-list-box'}
-        />
-    ),
+  tabBarLabel: 'Routes',
+  tabBarIcon: ({focused}) => (
+    <TabBarIcon
+      focused={focused}
+      name={Platform.OS === 'ios' ? `ios-list-box${focused ? '' : '-outline'}` : 'md-list-box'}
+    />
+  ),
 };
 
 const ChatListStack = createStackNavigator({
-    ChatScreen: ChatScreen,
+  ChatScreen: ChatScreen,
 });
 
 ChatListStack.navigationOptions = {
-    tabBarLabel: 'Chat',
-    tabBarIcon: ({focused}) => (
-        <TabBarIcon
-            focused={focused}
-            name={Platform.OS === 'ios' ? `ios-chatboxes${focused ? '' : '-outline'}` : 'md-chatboxes'}
-        />
-    ),
+  tabBarLabel: 'Chat',
+  tabBarIcon: ({focused}) => (
+    <TabBarIcon
+      focused={focused}
+      name={Platform.OS === 'ios' ? `ios-chatboxes${focused ? '' : '-outline'}` : 'md-chatboxes'}
+    />
+  ),
 };
 
 export default createBottomTabNavigator({
-    MyProfile,
-    MapStack,
-    RoutesListStack,
-    ChatListStack,
+  MyProfileStack,
+  MapStack,
+  RoutesListStack,
+  ChatListStack,
 });
