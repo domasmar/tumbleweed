@@ -18,7 +18,7 @@ abstract class CollectionBasedDao(databaseName: Option[String] = None)(implicit 
 
       override def onError(e: Throwable): Unit = println(s"Failed: $e")
 
-      override def onComplete(): Unit = println("Completed")
+      override def onComplete(): Unit = println("Completed 1")
     }
   }
 
@@ -28,9 +28,15 @@ abstract class CollectionBasedDao(databaseName: Option[String] = None)(implicit 
 
       override def onNext(result: T): Unit = acc += result
 
-      override def onError(e: Throwable): Unit = promise.failure(e)
+      override def onError(e: Throwable): Unit = {
+        println("failed")
+        promise.failure(e)
+      }
 
-      override def onComplete(): Unit = promise.success(acc.toList)
+      override def onComplete(): Unit = {
+        println("Completed paths" + acc.size)
+        promise.success(acc.toList)
+      }
     }
   }
 
@@ -41,7 +47,7 @@ abstract class CollectionBasedDao(databaseName: Option[String] = None)(implicit 
 
       override def onError(e: Throwable): Unit = println(s"Failed: $e")
 
-      override def onComplete(): Unit = println("Completed")
+      override def onComplete(): Unit = println("Completed 2")
     }
   }
 
