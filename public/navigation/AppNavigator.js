@@ -1,10 +1,27 @@
 import React from 'react';
-import { createSwitchNavigator } from 'react-navigation';
+import {createStackNavigator} from 'react-navigation';
 
-import MainTabNavigator from './MainTabNavigator';
+import LandingPage from "../screens/LandingPage";
+import DriverNavigator from './DriverNavigator';
+import PassengerNavigator from './PassengerNavigator';
 
-export default createSwitchNavigator({
-  // You could add another route here for authentication.
-  // Read more at https://reactnavigation.org/docs/en/auth-flow.html
-  Main: MainTabNavigator,
-});
+
+const RootStack = createStackNavigator(
+  {
+    Landing: {
+      screen: LandingPage,
+    },
+    Passenger: PassengerNavigator,
+    Driver: DriverNavigator,
+  },
+  {
+    headerMode: 'none',
+    navigationOptions: {
+      headerVisible: false,
+    }
+  });
+export default class App extends React.Component {
+  render() {
+    return <RootStack/>;
+  }
+}
