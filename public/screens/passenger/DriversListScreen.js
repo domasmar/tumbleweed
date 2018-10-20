@@ -2,12 +2,13 @@ import React from 'react';
 import {StyleSheet, View, Text} from 'react-native';
 import {connect} from 'react-redux';
 
+import { grid } from '../../constants/Styles';
 import ListView from '../../components/ListView';
 import LoadingView from '../../components/Loading';
 
 class DriversListScreen extends React.Component {
   static navigationOptions = {
-    title: 'Drivers Routes',
+    title: 'Drivers',
   };
 
   constructor(props) {
@@ -63,26 +64,7 @@ class DriversListScreen extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection: 'row',
-    paddingRight: 5,
-    paddingLeft: 5,
-  },
-  col6: {
-    flexBasis: '50%',
-  },
-  col4: {
-    flexBasis: '33.33%',
-  },
-  col3: {
-    flexBasis: '25%',
-  },
-  row: {
-    flex: 1,
-    flexWrap: 'wrap',
-    justifyContent: 'center',
-  },
+  ...grid,
   textLabel: {
     fontWeight: 'bold',
     marginRight: 5,

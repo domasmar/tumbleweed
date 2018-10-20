@@ -50,7 +50,7 @@ RoutesListStack.navigationOptions = {
 };
 
 export default createBottomTabNavigator({
-  MyProfile,
+  MyProfileStack,
   MapStack,
   RoutesListStack,
 });

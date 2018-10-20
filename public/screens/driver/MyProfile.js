@@ -9,6 +9,9 @@ import {Avatar, ListItem} from 'react-native-elements';
 import {View} from "react-native";
 
 export class MyProfile extends React.Component {
+  static navigationOptions = {
+    title: 'Account',
+  };
 
   constructor(props) {
     super(props);
