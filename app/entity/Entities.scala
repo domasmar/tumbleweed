@@ -7,6 +7,15 @@ case class PickupPoint(`type`: String, name: String, point: Point)
 
 case class Point(lat: Double, long: Double)
 
+case class DriverPath(
+                       driverId: String,
+                       start: Point,
+                       end: Point,
+                       startLabel: String,
+                       endLabel: String,
+                       points: List[Point]
+                     )
+
 object Point {
 
   def distance(p1: Point, p2: Point): Double = {
@@ -19,10 +28,12 @@ object Registries {
 
   val pickupPointCodec = Macros.createCodecProviderIgnoreNone[PickupPoint]
   val pointCodec = Macros.createCodecProviderIgnoreNone[Point]
+  val driverPathCodec = Macros.createCodecProviderIgnoreNone[DriverPath]
 
   val codecRegistry = fromRegistries(
     fromProviders(pickupPointCodec),
     fromProviders(pointCodec),
+    fromProviders(driverPathCodec),
     DEFAULT_CODEC_REGISTRY
   )
 }
