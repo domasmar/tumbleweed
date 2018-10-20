@@ -37,6 +37,21 @@ export default class Autocomplete extends React.Component {
             console.info(data, details);
           }}
           renderRightButton={ renderRightButton }
+          styles={{
+            container: {
+              backgroundColor: '#fff',
+            },
+            textInput: {
+              padding: 0,
+              height: 50,
+            },
+            textInputContainer: {
+              padding: 0,
+              height: 60,
+              backgroundColor: '#fff',
+              paddingRight: 15,
+            }
+          }}
         />
       </View>
     );
