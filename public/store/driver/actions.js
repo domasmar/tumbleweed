@@ -51,3 +51,19 @@ export function getDriverRoute(startLocation, endLocation) {
     return dispatch(isLoading(false));
   }
 }
+
+export const SET_DRIVER_FROM = 'SET_DRIVER_FROM';
+function setDriverFrom(from) {
+  return {
+    type: SET_DRIVER_FROM,
+    from: from
+  }
+}
+
+export const SET_DRIVER_TO = 'SET_DRIVER_TO';
+function setDriverTo(to) {
+  return {
+    type: SET_DRIVER_TO,
+    to: to
+  }
+}
