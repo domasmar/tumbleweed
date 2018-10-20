@@ -16,6 +16,9 @@ libraryDependencies += "com.typesafe.play" %% "play-json" % "2.6.10"
 // https://mvnrepository.com/artifact/org.mongodb.scala/mongo-scala-driver
 libraryDependencies += "org.mongodb.scala" %% "mongo-scala-driver" % "2.4.2"
 libraryDependencies += "com.fasterxml.jackson.module" %% "jackson-module-scala" % "2.9.7"
+// https://mvnrepository.com/artifact/com.google.maps/google-maps-services
+libraryDependencies += "com.google.maps" % "google-maps-services" % "0.2.11"
+
 
 
 herokuAppName in Compile := "tumbleweed-hack"

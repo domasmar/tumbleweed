@@ -1,18 +1,22 @@
 package entity
 
+import com.google.maps.model.LatLng
 import org.bson.codecs.configuration.CodecRegistries._
 import org.mongodb.scala.bson.codecs.{DEFAULT_CODEC_REGISTRY, Macros}
 
 case class PickupPoint(`type`: String, name: String, point: Point)
 
-case class Point(lat: Double, long: Double)
+case class Point(lat: Double, lng: Double) {
+  override def toString: String = s"$lat,$lng"
+}
 
 object Point {
 
-  def distance(p1: Point, p2: Point): Double = {
-    Math.sqrt(Math.pow(p2.lat - p1.lat, 2) + Math.pow(p2.long - p1.long, 2))
-  }
+  def apply(latLng: LatLng): Point = new Point(latLng.lat, latLng.lng)
 
+  def distance(p1: Point, p2: Point): Double = {
+    Math.sqrt(Math.pow(p2.lat - p1.lat, 2) + Math.pow(p2.lng - p1.lng, 2))
+  }
 }
 
 object Registries {
@@ -26,3 +30,11 @@ object Registries {
     DEFAULT_CODEC_REGISTRY
   )
 }
+
+
+case class Route(
+                  startLocation: Point,
+                  endLocation: Point,
+                  routeSteps: List[Point]
+                )
+

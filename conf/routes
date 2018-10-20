@@ -13,3 +13,5 @@ GET        /chat                                        chat.ChatController.chat
 
 GET        /pickuppoints/all                            controllers.PickupPointController.getAll()
 GET        /pickuppoints/:lat/:long/:maxDistance        controllers.PickupPointController.get(lat: Double, long: Double, maxDistance: Double)
+
+POST        /direction/route                             controllers.DirectionsController.route
