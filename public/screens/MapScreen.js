@@ -3,7 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import {Platform, StyleSheet, View} from 'react-native';
 
-import { getLocation, getDriverRoute } from "../store/actions";
+import { getLocation, getDriverRoute } from "../store/driver/actions";
 
 import Colors from '../constants/Colors';
 import MapView from '../components/MapView';
