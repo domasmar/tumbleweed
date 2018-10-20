@@ -5,7 +5,7 @@ import {connect} from 'react-redux';
 import {setSelectedRoute} from '../../store/passenger/actions';
 import LoadingView from '../../components/Loading';
 
-import {mappedDrivers} from '../../screens/driver/Drivers';
+import {mappedDrivers} from '../Drivers';
 
 import {List, ListItem} from 'react-native-elements'
 import axios from "axios";

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Icon } from 'expo';
 import {connect} from 'react-redux';
-import {Platform, StyleSheet} from 'react-native';
+import {Button, Platform, StyleSheet, View} from 'react-native';
 
 import {getLocation} from '../../store/driver/actions';
 import {getDriversList} from '../../store/passenger/actions';
@@ -122,11 +122,35 @@ class MapScreen extends React.Component {
           }
         };
 
+        const renderClearSearch = () => {
+          if (this.state.from && this.state.to) {
+            return (
+              <View style={styles.buttonContainer}>
+                <View style={styles.button}>
+                  <Button
+                    title={'Clear Search'}
+                    color={Colors.tabIconDefault}
+                    onPress={() => {
+                      this.setState(prev => {
+                        return {
+                          from: null,
+                          to: null,
+                        }
+                      })
+                    }}/>
+                </View>
+              </View>
+            );
+          }
+        }
+
         return (
           <React.Fragment>
             {renderFromAutocomplete()}
 
             {renderToAutocomplete()}
+
+            {renderClearSearch()}
 
             <MapView
               latitude={latitude}
@@ -149,6 +173,20 @@ class MapScreen extends React.Component {
 const styles = StyleSheet.create({
   currLocationButton: {
     marginTop: 12,
+  },
+  buttonContainer: {
+    width: '100%',
+    flex: 1,
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    bottom: 0,
+    flexDirection: 'row',
+    zIndex: 2,
+  },
+  button: {
+    zIndex: 4,
+    flexBasis: '100%',
   },
 });
 
