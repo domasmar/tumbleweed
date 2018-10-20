@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 
 import ListView from '../../components/ListView';
 import LoadingView from '../../components/Loading';
-import RouteView from "../../components/RouteView";
+import RouteListItem from "../../components/RouteListItem";
 
 class RoutesScreen extends React.Component {
   static navigationOptions = {
@@ -18,7 +18,7 @@ class RoutesScreen extends React.Component {
   }
 
   renderItem(item) {
-    return <RouteView route={item}/>
+    return <RouteListItem route={item}/>
   }
 
   render() {
@@ -34,8 +34,8 @@ class RoutesScreen extends React.Component {
   }
 }
 
-const mapStateToProps = ({isLoading, driversList}) => {
-  return {isLoading, driversList};
+const mapStateToProps = ({isLoading}) => {
+  return {isLoading};
 };
 
 const mapDispatchToProps = {};

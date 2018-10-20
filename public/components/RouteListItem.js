@@ -1,7 +1,7 @@
 import React from "react";
 import {FlatList, StyleSheet, View, Text, CheckBox} from "react-native";
 
-export default class RouteView extends React.Component {
+export default class RouteListItem extends React.Component {
     render() {
         if (this.props.route) {
             const route = this.props.route;
