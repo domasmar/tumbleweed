@@ -1,4 +1,4 @@
-import { Icon, MapView } from "expo";
+import { Icon, MapView, Polyline } from "expo";
 import React from "react";
 
 export default class MapViewComponent extends React.Component {
@@ -19,6 +19,22 @@ export default class MapViewComponent extends React.Component {
     }
   }
 
+  renderPolyline(polyline) {
+    return (
+      <MapView.Polyline
+        coordinates={
+          polyline.routeSteps.map(step => ({
+            latitude: step.lat,
+            longitude: step.lng,
+          }))
+        }
+        strokeWidth={10}
+        strokeColor="#00a8ff"
+        lineCap="round"
+      />
+    );
+  }
+
   render() {
     const {
       zoom,
@@ -37,6 +53,11 @@ export default class MapViewComponent extends React.Component {
             longitudeDelta: zoom,
           }}
         >
+          {
+            this.props.polylines.map(polyline => {
+              this.renderPolyline(polyline);
+            })
+          }
           {
             this.props.markerArr.map(marker => {
               return (

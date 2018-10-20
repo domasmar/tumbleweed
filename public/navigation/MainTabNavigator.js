@@ -10,7 +10,7 @@ const MapStack = createStackNavigator({
 });
 
 MapStack.navigationOptions = {
-    tabBarLabel: 'Set Routes',
+    tabBarLabel: 'Set Route',
     tabBarIcon: ({ focused }) => (
         <TabBarIcon
             focused={focused}

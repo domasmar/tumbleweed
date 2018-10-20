@@ -1,12 +1,10 @@
 import React from 'react';
-import { createStore } from 'redux';
-import { Provider } from 'react-redux';
-import reducer from './store/reducer';
-import { Platform, StatusBar, StyleSheet, View } from 'react-native';
 import { AppLoading, Asset, Font, Icon } from 'expo';
-import AppNavigator from './navigation/AppNavigator';
+import { Provider } from 'react-redux';
+import { Platform, StatusBar, StyleSheet, View } from 'react-native';
 
-const store = createStore(reducer);
+import store from './store';
+import AppNavigator from './navigation/AppNavigator';
 
 export default class App extends React.Component {
   state = {
