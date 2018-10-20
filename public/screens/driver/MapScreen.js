@@ -11,8 +11,6 @@ import ErrorView from '../../components/Error';
 import LoadingView from '../../components/Loading';
 import Autocomplete from "../../components/Autocomplete";
 
-import {Icon} from 'react-native-elements';
-
 
 class MapScreen extends React.Component {
   static navigationOptions = {
