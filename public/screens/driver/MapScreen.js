@@ -1,9 +1,17 @@
 import React from 'react';
-import { Icon } from 'expo';
+import {Icon} from 'expo';
 import {connect} from 'react-redux';
-import {Platform, StyleSheet} from 'react-native';
+import {Button, Platform, StyleSheet, View} from 'react-native';
 
-import {getDriverRoute, getLocation} from "../../store/driver/actions";
+import {
+  clearRoute,
+  getDriverRoute,
+  getLocation,
+  saveRoute,
+  updateDriverFrom,
+  updateDriverRoute,
+  updateDriverTo
+} from "../../store/driver/actions";
 
 import Colors from '../../constants/Colors';
 import MapView from '../../components/MapView';
@@ -19,150 +27,156 @@ class MapScreen extends React.Component {
 
   constructor(props) {
     super(props);
-
-    this.state = {
-      from: null,
-      to: null
-    };
+    this.map = React.createRef();
   }
 
   componentWillMount() {
     this.props.getLocation();
   }
 
+  async save() {
+    await this.props.saveRoute();
+    this.clear();
+    this.props.navigation.navigate('RoutesList');
+  }
+
+  clear() {
+    this.props.updateDriverFrom(null);
+    this.props.updateDriverTo(null);
+    this.props.clearRoute();
+  }
+
   render() {
-    if (!this.props.isLoading) {
-      if (this.props.userLocation) {
-
-        const {latitude, longitude} = this.props.userLocation.coords;
-
-        const markers = [{
-          key: 'current_marker',
-          latitude: latitude,
-          longitude: longitude,
-          icon: {
-            name: Platform.OS === 'ios' ? 'ios-pin' : 'md-pin',
-            color: Colors.markerUser,
-            size: 42,
-          },
-          title: 'You are here',
-        }];
-
-        if (this.state.from !== null) {
-          if (this.state.from.lat === latitude && this.state.from.lng === longitude) {
-            // From is the same as current possition
-            markers.length = 0;
-          }
-          markers.push({
-            key: 'from_marker',
-            latitude: this.state.from.lat,
-            longitude: this.state.from.lng,
-            icon: {
-              name: Platform.OS === 'ios' ? 'ios-pin' : 'md-pin',
-              color: Colors.markerUser,
-              size: 42,
-            },
-            title: 'From',
-          })
-        }
-
-        if (this.state.to !== null) {
-          markers.push({
-            key: 'to_marker',
-            latitude: this.state.to.lat,
-            longitude: this.state.to.lng,
-            icon: {
-              name: Platform.OS === 'ios' ? 'ios-pin' : 'md-pin',
-              color: Colors.markerUser,
-              size: 42,
-            },
-            title: 'To',
-          })
-        }
-
-
-        const renderCurrentLocation = () => {
-          return (
-            <Icon.Ionicons
-              style={styles.currLocationButton}
-              size={34}
-              name={Platform.OS === 'ios' ? 'ios-locate-outline' : 'md-locate'}
-              color={Colors.tabIconDefault}
-              onPress={() =>
-                this.setState(prev => {
-                  return {
-                    from: {
-                      lat: latitude,
-                      lng: longitude
-                    }
-                  }
-                })
-              }
-            />
-          );
-        };
-
-        const renderFromAutocomplete = () => {
-          if (this.state.from === null) {
-            return (
-              <Autocomplete
-                placeholder='Where from?'
-                renderRightButton={renderCurrentLocation}
-                onSelect={({lat, lng}) => {
-                  this.setState(prev => {
-                    return {
-                      from: {
-                        lat: lat,
-                        lng: lng
-                      }
-                    }
-                  })
-                }}
-              />
-            );
-          }
-        };
-
-        const renderToAutocomplete = () => {
-          if (this.state.from !== null && this.state.to === null) {
-            return (
-              <Autocomplete
-                placeholder='Where to?'
-                onSelect={({lat, lng}) => {
-                  this.setState(prev => {
-                    return {
-                      to: {
-                        lat: lat,
-                        lng: lng
-                      }
-                    }
-                  })
-                }}
-              />
-            );
-          }
-        };
-
-        return (
-          <React.Fragment>
-            {renderFromAutocomplete()}
-
-            {renderToAutocomplete()}
-
-            <MapView
-              latitude={latitude}
-              longitude={longitude}
-              zoom={0.005}
-              markerArr={markers}
-              polylines={this.props.driverRoutes}
-            />
-
-          </React.Fragment>);
-      } else {
-        return <ErrorView errorMessage={'Permission to access location was denied'}/>
-      }
+    if (this.props.isLoading) {
+      return <LoadingView/>;
     }
-    return <LoadingView/>;
+    if (!this.props.userLocation) {
+      return <ErrorView errorMessage={'Permission to access location was denied'}/>
+    }
+    const {latitude, longitude} = this.props.userLocation.coords;
+    const markers = [];
+
+    if (this.props.driverFrom !== null) {
+      markers.push({
+        key: 'from_marker',
+        latitude: this.props.driverFrom.lat,
+        longitude: this.props.driverFrom.lng,
+        icon: {
+          name: Platform.OS === 'ios' ? 'ios-pin' : 'md-pin',
+          color: Colors.markerUser,
+          size: 42,
+        },
+        title: 'From',
+      })
+    }
+
+    if (this.props.driverTo !== null) {
+      markers.push({
+        key: 'to_marker',
+        latitude: this.props.driverTo.lat,
+        longitude: this.props.driverTo.lng,
+        icon: {
+          name: Platform.OS === 'ios' ? 'ios-pin' : 'md-pin',
+          color: Colors.markerUser,
+          size: 42,
+        },
+        title: 'To',
+      })
+    }
+
+
+    const renderCurrentLocation = () => {
+      return (
+        <Icon.Ionicons
+          style={styles.currLocationButton}
+          size={34}
+          name={Platform.OS === 'ios' ? 'ios-locate-outline' : 'md-locate'}
+          color={Colors.tabIconDefault}
+          onPress={() => {
+            this.props.updateDriverFrom({lat: latitude, lng: longitude});
+            this.props.updateDriverRoute();
+          }}
+        />
+      );
+    };
+
+    const renderFromAutocomplete = () => {
+      if (this.props.driverFrom === null) {
+        return (
+          <Autocomplete
+            placeholder='Where from?'
+            renderRightButton={renderCurrentLocation}
+            onSelect={({lat, lng}) => {
+              this.props.updateDriverFrom({lat, lng});
+              this.props.updateDriverRoute();
+            }}
+          />
+        );
+      }
+    };
+
+    const renderToAutocomplete = () => {
+      if (this.props.driverFrom !== null && this.props.driverTo === null) {
+        return (
+          <Autocomplete
+            placeholder='Where to?'
+            onSelect={({lat, lng}) => {
+              this.props.updateDriverTo({lat, lng});
+              this.props.getDriverRoute(
+                this.props.driverFrom,
+                this.props.driverTo
+              )
+            }}
+          />
+        );
+      }
+    };
+
+    const renderConfirmButton = () => {
+      // if (this.props.driverFrom !== null && this.props.driverTo !== null) {
+      //   return;
+      // }
+      return (
+        <View style={styles.buttonContainer}>
+          <View style={styles.button}>
+            <Button
+              title={'Clear'}
+              color={Colors.tabIconDefault}
+              onPress={() => {
+                this.clear()
+              }}/>
+          </View>
+          <View style={styles.button}>
+            <Button
+              title={'Save'}
+              color={Colors.tintColor}
+              onPress={() => {
+                this.save()
+              }}/>
+          </View>
+        </View>
+      );
+    }
+
+    return (
+      <React.Fragment>
+        {renderFromAutocomplete()}
+
+        {renderToAutocomplete()}
+
+        {renderConfirmButton()}
+
+        <MapView
+          ref={this.map}
+          latitude={latitude}
+          longitude={longitude}
+          zoom={0.005}
+          markerArr={markers}
+          polylines={this.props.driverRoutes}
+        />
+
+      </React.Fragment>);
+
   }
 }
 
@@ -171,19 +185,39 @@ const styles = StyleSheet.create({
   currLocationButton: {
     marginTop: 12,
   },
+  buttonContainer: {
+    width: '100%',
+    flex: 1,
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    bottom: 0,
+    flexDirection: 'row',
+  },
+  button: {
+    zIndex: 4,
+    flexBasis: '50%',
+  },
 });
 
-const mapStateToProps = ({isLoading, userLocation, driverRoutes}) => {
+const mapStateToProps = ({isLoading, userLocation, driverRoutes, driverFrom, driverTo}) => {
   return {
     isLoading,
     userLocation,
     driverRoutes,
+    driverFrom,
+    driverTo
   };
 };
 
 const mapDispatchToProps = {
   getLocation,
   getDriverRoute,
+  updateDriverFrom,
+  updateDriverTo,
+  updateDriverRoute,
+  clearRoute,
+  saveRoute
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(MapScreen);

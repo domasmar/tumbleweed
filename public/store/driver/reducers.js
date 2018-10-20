@@ -4,7 +4,9 @@ import thunkMiddleware from "redux-thunk";
 import {
   SET_ROUTE,
   IS_LOADING,
-  SET_LOCATION
+  SET_LOCATION,
+  SET_DRIVER_FROM,
+  SET_DRIVER_TO
 } from "./actions";
 
 function isLoading(state = false, action) {
@@ -19,7 +21,7 @@ function isLoading(state = false, action) {
 function driverRoutes(state = [], action) {
   switch (action.type) {
     case SET_ROUTE:
-      return [...state, action.route.data];
+      return action.route === null ? [] : [...state, action.route.data];
     default:
       return state;
   }
@@ -34,10 +36,30 @@ function userLocation(state = null, action) {
   }
 }
 
+function driverFrom(state = null, action) {
+  switch (action.type) {
+    case SET_DRIVER_FROM:
+      return action.driverFrom;
+    default:
+      return state;
+  }
+}
+
+function driverTo(state = null, action) {
+  switch (action.type) {
+    case SET_DRIVER_TO:
+      return action.driverTo;
+    default:
+      return state;
+  }
+}
+
 const reducers = combineReducers({
   isLoading,
   userLocation,
   driverRoutes,
+  driverFrom,
+  driverTo
 });
 
 const store = createStore(
