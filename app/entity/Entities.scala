@@ -22,6 +22,19 @@ case class DriverPath(
                        active: Boolean = true
                      )
 
+case class DriverPathView(
+                           routeId: Option[String],
+                           startLabel: Option[String],
+                           endLabel: Option[String],
+                           hidden: Boolean,
+                         )
+
+object DriverPathView {
+  def apply(
+             driverPath: DriverPath,
+           ): DriverPathView = new DriverPathView(driverPath.routeId, driverPath.startLabel, driverPath.endLabel, driverPath.hidden)
+}
+
 object Point {
 
   def apply(latLng: LatLng): Point = new Point(latLng.lat, latLng.lng)
