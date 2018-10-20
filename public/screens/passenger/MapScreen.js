@@ -1,9 +1,10 @@
 import React from 'react';
-
+import { Icon } from 'expo';
 import {connect} from 'react-redux';
 import {Platform, StyleSheet} from 'react-native';
 
-import { getLocation } from "../../store/driver/actions";
+import {getLocation} from '../../store/driver/actions';
+import {getDriversList} from '../../store/passenger/actions';
 
 import Colors from '../../constants/Colors';
 import MapView from '../../components/MapView';
@@ -11,10 +12,25 @@ import ErrorView from '../../components/Error';
 import LoadingView from '../../components/Loading';
 import Autocomplete from "../../components/Autocomplete";
 
+import {
+  PinMarker,
+  FinishMarker,
+} from '../../components/markers/Markers';
+
+
 class MapScreen extends React.Component {
   static navigationOptions = {
     header: null,
   };
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      from: null,
+      to: null
+    };
+  }
 
   componentWillMount() {
     this.props.getLocation();
@@ -23,28 +39,103 @@ class MapScreen extends React.Component {
   render() {
     if (!this.props.isLoading) {
       if (this.props.userLocation) {
+
         const {latitude, longitude} = this.props.userLocation.coords;
 
-        const marker = {
-          latitude,
-          longitude,
-          icon: {
-            name: Platform.OS === 'ios' ? 'ios-pin' : 'md-pin',
-            color: Colors.markerUser,
-            size: 42,
-          },
-          title: 'You are here',
+        const markers = [new PinMarker(latitude, longitude, 'You are here')];
+
+        if (this.state.from !== null) {
+          if (this.state.from.lat === latitude && this.state.from.lng === longitude) {
+            // From is the same as current possition
+            markers.length = 0;
+          }
+          markers.splice(0, 1, new PinMarker(this.state.from.lat, this.state.from.lng));
+        }
+
+        if (this.state.to !== null) {
+          markers.push(new FinishMarker(this.state.to.lat, this.state.to.lng));
+        }
+
+        const renderCurrentLocation = () => {
+          return (
+            <Icon.Ionicons
+              style={styles.currLocationButton}
+              size={34}
+              name={Platform.OS === 'ios' ? 'ios-locate-outline' : 'md-locate'}
+              color={Colors.tabIconDefault}
+              onPress={() =>
+                this.setState(prev => {
+                  return {
+                    from: {
+                      lat: latitude,
+                      lng: longitude
+                    }
+                  }
+                })
+              }
+            />
+          );
+        };
+
+        const renderFromAutocomplete = () => {
+          if (this.state.from === null) {
+            return (
+              <Autocomplete
+                placeholder='Where from?'
+                renderRightButton={renderCurrentLocation}
+                onSelect={({lat, lng}) => {
+                  this.setState(prev => {
+                    return {
+                      from: {
+                        lat: lat,
+                        lng: lng
+                      }
+                    }
+                  })
+                }}
+              />
+            );
+          }
+        };
+
+        const renderToAutocomplete = () => {
+          if (this.state.from !== null && this.state.to === null) {
+            return (
+              <Autocomplete
+                placeholder='Where to?'
+                onSelect={({lat, lng}) => {
+                  this.setState(prev => {
+                    return {
+                      to: {
+                        lat: lat,
+                        lng: lng
+                      }
+                    }
+                  });
+                  if (this.state.from && this.state.to) {
+                    this.props.getDriversList(this.state.from, this.state.to);
+                    this.props.navigation.navigate('DriversListStack');
+                  }
+                }}
+              />
+            );
+          }
         };
 
         return (
           <React.Fragment>
+            {renderFromAutocomplete()}
+
+            {renderToAutocomplete()}
+
             <MapView
               latitude={latitude}
               longitude={longitude}
               zoom={0.005}
-              markerArr={[marker]}
+              markerArr={markers}
+              polylines={this.props.driverRoutes}
             />
-            <Autocomplete placeholder='Where do you want to go?'/>
+
           </React.Fragment>);
       } else {
         return <ErrorView errorMessage={'Permission to access location was denied'}/>
@@ -54,15 +145,24 @@ class MapScreen extends React.Component {
   }
 }
 
-const mapStateToProps = ({ isLoading, userLocation }) => {
+
+const styles = StyleSheet.create({
+  currLocationButton: {
+    marginTop: 12,
+  },
+});
+
+const mapStateToProps = ({isLoading, userLocation, driversList}) => {
   return {
     isLoading,
     userLocation,
+    driversList,
   };
 };
 
 const mapDispatchToProps = {
   getLocation,
+  getDriversList,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(MapScreen);

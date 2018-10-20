@@ -9,11 +9,13 @@ export default class ListView extends React.Component {
           data={this.props.items}
           style={styles.container}
           renderItem={
-            ({item}) => (
-              <View style={styles.listItem}>
-                <Text>{item.key}</Text>
-              </View>
-            )
+            ({item}) => {
+              return (
+                <View style={styles.listItem}>
+                  {this.props.getRenderItem(item)}
+                </View>
+              );
+            }
           }
         />
       );
@@ -28,10 +30,9 @@ const styles = StyleSheet.create({
   },
   listItem: {
     width: '100%',
-    height: 60,
+    height: 'auto',
     flex: 1,
-    paddingLeft: 16,
-    paddingRight: 16,
+    padding: 20,
     alignItems: 'flex-start',
     justifyContent: 'center',
     backgroundColor: '#fff',

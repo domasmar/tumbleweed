@@ -1,11 +1,10 @@
 import React from 'react';
-
 import {connect} from 'react-redux';
-import {FlatList, View, Text} from 'react-native';
 
 import ListView from '../../components/ListView';
+import LoadingView from '../../components/Loading';
 
-class RoutesList extends React.Component {
+class RoutesScreen extends React.Component {
   static navigationOptions = {
     title: 'Drivers Routes',
   };
@@ -15,7 +14,6 @@ class RoutesList extends React.Component {
   }
 
   componentWillMount() {
-
   }
 
   render() {
@@ -30,11 +28,11 @@ class RoutesList extends React.Component {
   }
 }
 
-const mapStateToProps = ({ isLoading }) => {
-  return { isLoading };
+const mapStateToProps = ({ isLoading, driversList }) => {
+  return { isLoading, driversList };
 };
 
 const mapDispatchToProps = {
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(RoutesList);
+export default connect(mapStateToProps, mapDispatchToProps)(RoutesScreen);

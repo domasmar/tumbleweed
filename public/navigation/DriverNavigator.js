@@ -4,7 +4,7 @@ import { createStackNavigator, createBottomTabNavigator } from 'react-navigation
 
 import TabBarIcon from '../components/TabBarIcon';
 import MapScreen from '../screens/driver/MapScreen';
-import RoutesList from '../screens/driver/RoutesList';
+import RoutesList from '../screens/driver/RoutesScreen';
 
 const MapStack = createStackNavigator({
   Map: MapScreen,

@@ -11,6 +11,10 @@ import ErrorView from '../../components/Error';
 import LoadingView from '../../components/Loading';
 import Autocomplete from "../../components/Autocomplete";
 
+import {
+  PinMarker,
+  FinishMarker,
+} from '../../components/markers/Markers';
 
 class MapScreen extends React.Component {
   static navigationOptions = {
@@ -36,50 +40,19 @@ class MapScreen extends React.Component {
 
         const {latitude, longitude} = this.props.userLocation.coords;
 
-        const markers = [{
-          key: 'current_marker',
-          latitude: latitude,
-          longitude: longitude,
-          icon: {
-            name: Platform.OS === 'ios' ? 'ios-pin' : 'md-pin',
-            color: Colors.markerUser,
-            size: 42,
-          },
-          title: 'You are here',
-        }];
+        const markers = [new PinMarker(latitude, longitude, 'You are here')];
 
         if (this.state.from !== null) {
           if (this.state.from.lat === latitude && this.state.from.lng === longitude) {
             // From is the same as current possition
             markers.length = 0;
           }
-          markers.push({
-            key: 'from_marker',
-            latitude: this.state.from.lat,
-            longitude: this.state.from.lng,
-            icon: {
-              name: Platform.OS === 'ios' ? 'ios-pin' : 'md-pin',
-              color: Colors.markerUser,
-              size: 42,
-            },
-            title: 'From',
-          })
+          markers.splice(0, 1, new PinMarker(this.state.from.lat, this.state.from.lng));
         }
 
         if (this.state.to !== null) {
-          markers.push({
-            key: 'to_marker',
-            latitude: this.state.to.lat,
-            longitude: this.state.to.lng,
-            icon: {
-              name: Platform.OS === 'ios' ? 'ios-pin' : 'md-pin',
-              color: Colors.markerUser,
-              size: 42,
-            },
-            title: 'To',
-          })
+          markers.push(new FinishMarker(this.state.to.lat, this.state.to.lng));
         }
-
 
         const renderCurrentLocation = () => {
           return (
