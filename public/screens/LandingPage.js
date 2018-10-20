@@ -1,23 +1,28 @@
 import React from "react";
-
-import {Button, View, StyleSheet, Text} from 'react-native';
+import {Platform, StatusBar, View, StyleSheet, Text} from 'react-native';
 import { Icon } from 'react-native-elements';
+import { Provider, connect } from 'react-redux';
 
-export default class LandingPage extends React.Component {
-  static navigationOptions = {
-    header: null,
-  };
+import PassengersStore from '../store/passenger/reducers';
+import DriversStore from '../store/driver/reducers';
 
-  render() {
+import PassengersNavigator from '../navigation/PassengerNavigator';
+import DriversNavigator from '../navigation/DriverNavigator';
+
+import {setDriver, setPassenger} from "../store/rootReducers";
+
+class LandingPage extends React.Component {
+  renderLandingView() {
     return (
       <View style={styles.container}>
         <View style={styles.buttonContainer}>
           <Icon
             reverse
             name='sentiment-satisfied'
-            onPress={() =>
-              this.props.navigation.navigate('Passenger')
-            }
+            onPress={() => {
+              this.props.setPassenger(true)
+              console.info(this.props.isPassenger);
+            }}
           />
           <Text>
             Passenger
@@ -27,9 +32,10 @@ export default class LandingPage extends React.Component {
           <Icon
             reverse
             name='directions-car'
-            onPress={() =>
-              this.props.navigation.navigate('Driver')
-            }
+            onPress={() => {
+              this.props.setDriver(true);
+              console.info(this.props.isDriver);
+            }}
           />
           <Text>
             Driver
@@ -39,6 +45,37 @@ export default class LandingPage extends React.Component {
     );
   }
 
+  renderDriversView() {
+    return (
+      <Provider store={ DriversStore }>
+        <View style={styles.container}>
+          {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
+          <DriversNavigator />
+        </View>
+      </Provider>
+    );
+  }
+
+  renderPassengersView() {
+    return (
+      <Provider store={ PassengersStore }>
+        <View style={styles.container}>
+          {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
+          <PassengersNavigator />
+        </View>
+      </Provider>
+    );
+  }
+
+  render() {
+    if (!this.props.isDriver && !this.props.isPassenger) {
+      return this.renderLandingView();
+    } else if (this.props.isDriver) {
+      return this.renderDriversView();
+    } else if (this.props.isPassenger) {
+      return this.renderPassengersView();
+    }
+  }
 }
 
 const styles = StyleSheet.create({
@@ -54,3 +91,13 @@ const styles = StyleSheet.create({
   }
 });
 
+const mapStateToProps = ({isDriver, isPassenger}) => {
+  return {isDriver, isPassenger};
+};
+
+const mapDispatchToProps = {
+  setDriver,
+  setPassenger,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(LandingPage);

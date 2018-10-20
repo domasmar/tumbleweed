@@ -3,7 +3,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {Platform, StyleSheet, View} from 'react-native';
 
-import {getDriverRoute, getLocation} from "../store/actions";
+import {getDriverRoute, getLocation} from "../store/driver/actions";
 
 import Colors from '../constants/Colors';
 import MapView from '../components/MapView';
@@ -114,19 +114,7 @@ class MapScreen extends React.Component {
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    width: '100%',
-    backgroundColor: '#fff',
-  },
-});
-
-
-const mapStateToProps = ({
-                           isLoading,
-                           userLocation,
-                           driverRoutes,
-                         }) => {
+const mapStateToProps = ({ isLoading, userLocation, driverRoutes }) => {
   return {
     isLoading,
     userLocation,
