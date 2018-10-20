@@ -5,9 +5,14 @@ export default class MapViewComponent extends React.Component {
 
   constructor(props) {
     super(props);
+    this.mapRef = React.createRef();
     this.state = {
       isMapReady: false
     }
+  }
+
+  fit() {
+    this.mapRef.current.fitToElements();
   }
 
   onMapLayout = () => {
@@ -55,7 +60,7 @@ export default class MapViewComponent extends React.Component {
       <MapView.Polyline
         key={idx}
         coordinates={coords}
-        strokeWidth={6}
+        strokeWidth={5}
         strokeColor="#00a8ff"
         lineCap="round"
       ></MapView.Polyline>
@@ -72,6 +77,7 @@ export default class MapViewComponent extends React.Component {
     if (latitude && longitude) {
       return (
         <MapView
+          ref={this.mapRef}
           style={{ flex: 1 }}
           initialRegion={{
             latitude,

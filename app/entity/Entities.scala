@@ -47,7 +47,6 @@ object Registries {
   )
 }
 
-
 case class Route(
                   startLocation: Point,
                   endLocation: Point,

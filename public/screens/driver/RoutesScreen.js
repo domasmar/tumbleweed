@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 
 import ListView from '../../components/ListView';
 import LoadingView from '../../components/Loading';
+import RouteView from "../../components/RouteView";
 
 class RoutesScreen extends React.Component {
   static navigationOptions = {
@@ -16,11 +17,16 @@ class RoutesScreen extends React.Component {
   componentWillMount() {
   }
 
+  renderItem(item) {
+    return <RouteView route={item}/>
+  }
+
   render() {
     if (!this.props.isLoading) {
       return (
         <ListView
           items={[{key: 'a'}, {key: 'b'}]}
+          getRenderItem={this.renderItem}
         />
       );
     }
@@ -28,11 +34,10 @@ class RoutesScreen extends React.Component {
   }
 }
 
-const mapStateToProps = ({ isLoading, driversList }) => {
-  return { isLoading, driversList };
+const mapStateToProps = ({isLoading, driversList}) => {
+  return {isLoading, driversList};
 };
 
-const mapDispatchToProps = {
-};
+const mapDispatchToProps = {};
 
 export default connect(mapStateToProps, mapDispatchToProps)(RoutesScreen);

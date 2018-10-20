@@ -7,6 +7,8 @@ import infrastructure.config.{CollectionBasedDao, DatabaseConnector}
 import javax.inject.Inject
 import org.mongodb.scala.MongoCollection
 import org.mongodb.scala.model.Filters.equal
+import org.mongodb.scala.model.Updates._
+
 
 import scala.concurrent.{ExecutionContext, Future, Promise}
 
@@ -43,6 +45,11 @@ class DriverPathDao @Inject()(implicit databaseConnector: DatabaseConnector, ec:
     } else {
       path
     }
+  }
+
+  def updatePathStatus(routeId: String, hide: Boolean): Unit = {
+    collection.findOneAndUpdate(equal("routeId", routeId), set("hidden", hide))
+      .subscribe(accumulateObserver(Promise[List[DriverPath]]()))
   }
 
 }
