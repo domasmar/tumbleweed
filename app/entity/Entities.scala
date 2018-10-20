@@ -10,6 +10,15 @@ case class Point(lat: Double, lng: Double) {
   override def toString: String = s"$lat,$lng"
 }
 
+case class DriverPath(
+                       driverId: String,
+                       start: Point,
+                       end: Point,
+                       startLabel: String,
+                       endLabel: String,
+                       points: List[Point]
+                     )
+
 object Point {
 
   def apply(latLng: LatLng): Point = new Point(latLng.lat, latLng.lng)
@@ -23,10 +32,12 @@ object Registries {
 
   val pickupPointCodec = Macros.createCodecProviderIgnoreNone[PickupPoint]
   val pointCodec = Macros.createCodecProviderIgnoreNone[Point]
+  val driverPathCodec = Macros.createCodecProviderIgnoreNone[DriverPath]
 
   val codecRegistry = fromRegistries(
     fromProviders(pickupPointCodec),
     fromProviders(pointCodec),
+    fromProviders(driverPathCodec),
     DEFAULT_CODEC_REGISTRY
   )
 }
