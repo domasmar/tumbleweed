@@ -1,5 +1,7 @@
 package infrastructure.persistance
 
+import java.time.LocalDateTime
+
 import entity.DriverPath
 import infrastructure.config.{CollectionBasedDao, DatabaseConnector}
 import javax.inject.Inject
@@ -30,7 +32,17 @@ class DriverPathDao @Inject()(implicit databaseConnector: DatabaseConnector, ec:
   }
 
   def save(points: List[DriverPath]) = {
-    collection.insertMany(points).subscribe(insertObserver)
+    collection
+      .insertMany(points.map(generateDriverPathId))
+      .subscribe(insertObserver)
+  }
+
+  private def generateDriverPathId(path: DriverPath) = {
+    if (path.routeId.isEmpty) {
+      path.copy(routeId = Some(path.driverId + LocalDateTime.now().toString))
+    } else {
+      path
+    }
   }
 
 }

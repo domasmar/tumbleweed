@@ -25,7 +25,7 @@ class DriverPathController @Inject()(
     Ok("Good")
   }
 
-  def hidePath(pathId: String) = Action { implicit request =>
+  def hidePath(pathId: String, hide: Boolean) = Action { implicit request =>
     Ok("to be implemented, hide when car is full")
   }
 }
