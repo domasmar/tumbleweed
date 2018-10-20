@@ -61,6 +61,7 @@ case class NearestDriverView(
                             )
 
 case class DriverInfo(driverId: String,
-                      carId: String)
+                      carId: String,
+                      routeId: String)
 
 case class StartEndLocation(startLocation: Point, endLocation: Point)
