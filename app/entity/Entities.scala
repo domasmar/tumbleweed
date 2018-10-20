@@ -7,6 +7,13 @@ case class PickupPoint(`type`: String, name: String, point: Point)
 
 case class Point(lat: Double, long: Double)
 
+object Point {
+
+  def distance(p1: Point, p2: Point): Double = {
+    Math.sqrt(Math.pow(p2.lat - p1.lat, 2) + Math.pow(p2.long - p1.long, 2))
+  }
+
+}
 
 object Registries {
 

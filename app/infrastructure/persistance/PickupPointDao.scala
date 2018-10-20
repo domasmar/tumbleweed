@@ -3,11 +3,15 @@ package infrastructure.persistance
 import entity.PickupPoint
 import infrastructure.config.{CollectionBasedDao, DatabaseConnector}
 import javax.inject.Inject
-import org.mongodb.scala.{Completed, MongoCollection, Observer}
 import org.mongodb.scala.model.Filters._
 import org.mongodb.scala.result.DeleteResult
+import org.mongodb.scala.{Completed, MongoCollection, Observer}
 
-class PickupPointDao @Inject()(implicit databaseConnector: DatabaseConnector) extends CollectionBasedDao() {
+import scala.collection.mutable
+import scala.concurrent.{ExecutionContext, Future, Promise}
+
+
+class PickupPointDao @Inject()(implicit databaseConnector: DatabaseConnector, ec: ExecutionContext) extends CollectionBasedDao() {
 
   val collection: MongoCollection[PickupPoint] = database.getCollection("pickup_points")
 
@@ -20,6 +24,20 @@ class PickupPointDao @Inject()(implicit databaseConnector: DatabaseConnector) ex
 
      override def onComplete(): Unit = println("Completed")
    })
+  }
+
+  def getAll(): Future[List[PickupPoint]] = {
+    val p = Promise[List[PickupPoint]]()
+
+    collection.find().subscribe(new Observer[PickupPoint] {
+      val acc: mutable.ArrayBuffer[PickupPoint] = mutable.ArrayBuffer()
+
+      override def onNext(result: PickupPoint): Unit = acc += result
+      override def onError(e: Throwable): Unit = p.failure(e)
+      override def onComplete(): Unit = p.success(acc.toList)
+    })
+
+    p.future
   }
 
   def getByType(`type`: String): List[PickupPoint] = {
