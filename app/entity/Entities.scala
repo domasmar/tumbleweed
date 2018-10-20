@@ -11,6 +11,7 @@ case class Point(lat: Double, lng: Double) {
 }
 
 case class DriverPath(
+                       routeId: Option[String],
                        driverId: String,
                        carId: String,
                        startLabel: Option[String],
