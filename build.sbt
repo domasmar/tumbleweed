@@ -1,5 +1,5 @@
 
-name := """tubmbleweed"""
+name := """tumbleweed"""
 organization := "com.ednax"
 
 version := "1.0-SNAPSHOT"
