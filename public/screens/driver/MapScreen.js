@@ -3,13 +3,13 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {Platform, StyleSheet} from 'react-native';
 
-import {getDriverRoute, getLocation} from "../store/driver/actions";
+import {getDriverRoute, getLocation} from "../../store/driver/actions";
 
-import Colors from '../constants/Colors';
-import MapView from '../components/MapView';
-import ErrorView from '../components/Error';
-import LoadingView from '../components/Loading';
-import Autocomplete from "../components/Autocomplete";
+import Colors from '../../constants/Colors';
+import MapView from '../../components/MapView';
+import ErrorView from '../../components/Error';
+import LoadingView from '../../components/Loading';
+import Autocomplete from "../../components/Autocomplete";
 
 
 class MapScreen extends React.Component {
@@ -56,7 +56,7 @@ class MapScreen extends React.Component {
               markerArr={[marker]}
               polylines={this.props.driverRoutes}
             />
-            <Autocomplete/>
+            <Autocomplete placeholder='Start route'/>
           </React.Fragment>);
       } else {
         return <ErrorView errorMessage={'Permission to access location was denied'}/>

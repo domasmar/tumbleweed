@@ -21,6 +21,7 @@ export default class Autocomplete extends React.Component {
             rankby: 'distance',
             types: 'food',
           }}
+          placeholder={this.props.placeholder}
           listViewDisplayed='auto'
           onPress={(data, details = null) => {
             console.info(data, details);
@@ -34,14 +35,11 @@ export default class Autocomplete extends React.Component {
 const styles = StyleSheet.create({
   container: {
     position: 'absolute',
-    // left: 0,
-    // right: 0,
-    top: 50,
+    top: 0,
     width: '100%',
     height: 'auto',
     flex: 1,
     alignItems: 'stretch',
-    // backgroundColor: '#fff',
     zIndex: 4,
   },
 });

@@ -49,7 +49,7 @@ class LandingPage extends React.Component {
     return (
       <Provider store={ DriversStore }>
         <View style={styles.container}>
-          {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
+          <StatusBar hidden={true} />
           <DriversNavigator />
         </View>
       </Provider>
@@ -60,7 +60,7 @@ class LandingPage extends React.Component {
     return (
       <Provider store={ PassengersStore }>
         <View style={styles.container}>
-          {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
+          <StatusBar hidden={true} />
           <PassengersNavigator />
         </View>
       </Provider>

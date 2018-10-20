@@ -81,11 +81,13 @@ export default class MapViewComponent extends React.Component {
           }}
           onLayout={this.onMapLayout}
         >
-          { this.state.isMapReady && this.props.polylines.map((polyline, index) => {
+          {
+            this.state.isMapReady && this.props.polylines && this.props.polylines.map((polyline, index) => {
               return this.renderPolyline(polyline, index);
             })
           }
-          { this.state.isMapReady && this.props.markerArr.map(marker => {
+          {
+            this.state.isMapReady && this.props.markerArr && this.props.markerArr.map(marker => {
               return this.renderMarker(marker);
             })
           }
