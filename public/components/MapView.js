@@ -2,6 +2,21 @@ import { Icon, MapView, Polyline } from "expo";
 import React from "react";
 
 export default class MapViewComponent extends React.Component {
+  renderMarker(marker) {
+    return (
+      <MapView.Marker
+        key={`${marker.longitude}${marker.latitude}`}
+        coordinate={{
+          latitude: marker.latitude,
+          longitude: marker.longitude,
+        }}
+        title={marker.title}
+      >
+        { this.renderIcon(marker) }
+      </MapView.Marker>
+    );
+  }
+
   renderIcon(marker) {
     if(marker.icon) {
       const {
@@ -31,7 +46,7 @@ export default class MapViewComponent extends React.Component {
         strokeWidth={6}
         strokeColor="#00a8ff"
         lineCap="round"
-      />
+      ></MapView.Polyline>
     );
   }
 
@@ -60,18 +75,7 @@ export default class MapViewComponent extends React.Component {
           }
           {
             this.props.markerArr.map(marker => {
-              return (
-                <MapView.Marker
-                  key={`${marker.longitude}${marker.latitude}`}
-                  coordinate={{
-                    latitude: marker.latitude,
-                    longitude: marker.longitude,
-                  }}
-                  title={marker.title}
-                >
-                  { this.renderIcon(marker) }
-                </MapView.Marker>
-              );
+              return this.renderMarker(marker);
             })
           }
         </MapView>
