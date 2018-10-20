@@ -117,30 +117,29 @@ class MapScreen extends React.Component {
     };
 
     const renderConfirmButton = () => {
-      // if (this.props.driverFrom !== null && this.props.driverTo !== null) {
-      //   return;
-      // }
-      return (
-        <View style={styles.buttonContainer}>
-          <View style={styles.button}>
-            <Button
-              title={'Clear'}
-              color={Colors.tabIconDefault}
-              onPress={() => {
-                this.clear()
-              }}/>
+      if (this.props.driverFrom && this.props.driverTo) {
+        return (
+          <View style={styles.buttonContainer}>
+            <View style={styles.button}>
+              <Button
+                title={'Clear'}
+                color={Colors.tabIconDefault}
+                onPress={() => {
+                  this.clear()
+                }}/>
+            </View>
+            <View style={styles.button}>
+              <Button
+                title={'Save'}
+                color={Colors.tintColor}
+                onPress={() => {
+                  this.save()
+                }}/>
+            </View>
           </View>
-          <View style={styles.button}>
-            <Button
-              title={'Save'}
-              color={Colors.tintColor}
-              onPress={() => {
-                this.save()
-              }}/>
-          </View>
-        </View>
-      );
-    }
+        );
+      }
+    };
 
     return (
       <React.Fragment>

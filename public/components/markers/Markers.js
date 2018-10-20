@@ -9,7 +9,7 @@ export function PinMarker(lat, lng, title = '') {
     longitude: lng,
     icon: {
       name: Platform.OS === 'ios' ? 'ios-pin' : 'md-pin',
-      color: Colors.markerUser,
+      color: Colors.markerStart,
       size: 42,
     },
   };
@@ -23,7 +23,7 @@ export function FinishMarker(lat, lng, title = '') {
     longitude: lng,
     icon: {
       name: Platform.OS === 'ios' ? 'ios-flag' : 'md-flag',
-      color: Colors.markerUser,
+      color: Colors.markerFinish,
       size: 42,
     },
   };
