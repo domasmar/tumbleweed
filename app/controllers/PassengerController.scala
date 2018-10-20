@@ -2,11 +2,12 @@ package controllers
 
 import entity.StartEndLocation
 import javax.inject.{Inject, Singleton}
-import play.api.mvc.{AbstractController, AnyContent, ControllerComponents, Request}
+import play.api.libs.json.Json
+import play.api.mvc._
 import services.map.api.GoogleDirectionsService
 import services.passengers.PassengerService
 
-import scala.concurrent.ExecutionContext
+import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class PassengerController @Inject()(
@@ -15,13 +16,16 @@ class PassengerController @Inject()(
                                    )
                                    (implicit ex: ExecutionContext) extends AbstractController(cc) with Mapper {
 
-  def getNearestDriverPaths() = Action { implicit request: Request[AnyContent] =>
+  def getNearestDriverPaths = Action.async { implicit request: Request[AnyContent] =>
+
+    if (!request.hasBody) {
+      BadRequest("Body not faund")
+    }
+
     val maybeLocation = request.body.asJson.map(dv => mapper.readValue(dv.toString(), classOf[StartEndLocation]))
-
-
-    maybeLocation.map(loc => passengerService.getNearestDriverRoads(loc.startLocation, loc.endLocation))
+    val loc = maybeLocation.get
+    passengerService.getNearestDriverRoads(loc.startLocation, loc.endLocation)
       .map(nearestRoutes => Ok(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(nearestRoutes)))
-      .getOrElse(NotFound("No nearest routes faund"))
   }
 
 }

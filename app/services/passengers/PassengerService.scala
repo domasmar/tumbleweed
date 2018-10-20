@@ -21,16 +21,18 @@ class PassengerService @Inject()(implicit ec: ExecutionContext, driverPathServic
   private def getNearestRoutes(startLocation: Point, endLocation: Point, allRoutes: List[DriverPath]): List[NearestDriverView] = {
 
     val nearestViews: List[NearestDriverView] =
-      allRoutes.map(path => (DriverInfo(path.driverId, path.carId), path.route))
+      allRoutes
+        .filterNot(_.hidden)
+        .map(path => (DriverInfo(path.driverId, path.carId), path.route))
         .map {
           case (driverInfo, route) =>
             val shortestDistanceToStart = MapHelper.findNearestRoutePointToPoint(startLocation, route)
             val shortestDistanceToEnd = MapHelper.findNearestRoutePointToPoint(endLocation, route)
-            NearestDriverView(driverInfo, shortestDistanceToStart.distance.toInt, shortestDistanceToEnd.distance.toInt)
+            NearestDriverView(driverInfo, shortestDistanceToStart.distanceMetres.toInt, shortestDistanceToEnd.distanceMetres.toInt)
         }
 
     nearestViews
       .filter(r => r.distFromEndLocation < DEFAULT_MAX_DISTANCE_M && r.distFromStartLocation < DEFAULT_MAX_DISTANCE_M)
-      .sortBy(r => (r.distFromStartLocation, r.distFromEndLocation))
+      .sortBy(r => r.distFromStartLocation + r.distFromEndLocation)
   }
 }

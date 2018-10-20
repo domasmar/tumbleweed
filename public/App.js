@@ -1,7 +1,7 @@
 import React from 'react';
 import { AppLoading, Asset, Font, Icon } from 'expo';
 import { Provider } from 'react-redux';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, StatusBar } from 'react-native';
 
 import rootStore from './store/rootReducers';
 import LandingPage from './screens/LandingPage';
@@ -23,7 +23,10 @@ export default class App extends React.Component {
     } else {
       return (
         <Provider store={ rootStore }>
-          <LandingPage />
+          <React.Fragment>
+            <StatusBar hidden={true} />
+            <LandingPage />
+          </React.Fragment>
         </Provider>
       );
     }

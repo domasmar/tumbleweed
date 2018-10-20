@@ -1,5 +1,5 @@
 import React from "react";
-import {Platform, StatusBar, View, StyleSheet, Text} from 'react-native';
+import { View, StyleSheet, Text} from 'react-native';
 import { Icon } from 'react-native-elements';
 import { Provider, connect } from 'react-redux';
 
@@ -21,7 +21,6 @@ class LandingPage extends React.Component {
             name='sentiment-satisfied'
             onPress={() => {
               this.props.setPassenger(true)
-              console.info(this.props.isPassenger);
             }}
           />
           <Text>
@@ -34,7 +33,6 @@ class LandingPage extends React.Component {
             name='directions-car'
             onPress={() => {
               this.props.setDriver(true);
-              console.info(this.props.isDriver);
             }}
           />
           <Text>
@@ -49,7 +47,6 @@ class LandingPage extends React.Component {
     return (
       <Provider store={ DriversStore }>
         <View style={styles.container}>
-          <StatusBar hidden={true} />
           <DriversNavigator />
         </View>
       </Provider>
@@ -60,7 +57,6 @@ class LandingPage extends React.Component {
     return (
       <Provider store={ PassengersStore }>
         <View style={styles.container}>
-          <StatusBar hidden={true} />
           <PassengersNavigator />
         </View>
       </Provider>

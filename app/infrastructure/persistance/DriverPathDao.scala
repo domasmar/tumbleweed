@@ -12,6 +12,7 @@ class DriverPathDao @Inject()(implicit databaseConnector: DatabaseConnector, ec:
 
   val collection: MongoCollection[DriverPath] = database.getCollection("driver_paths")
 
+
   def deleteByType(`type`: String) = {
     collection.deleteMany(equal("type", `type`)).subscribe(deleteObserver)
   }
