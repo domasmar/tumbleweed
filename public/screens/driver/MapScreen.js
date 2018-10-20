@@ -4,13 +4,13 @@ import {connect} from 'react-redux';
 import {Button, Platform, StyleSheet, View} from 'react-native';
 
 import {
+  clearRoute,
   getDriverRoute,
   getLocation,
+  saveRoute,
   updateDriverFrom,
   updateDriverRoute,
-  updateDriverTo,
-  clearRoute,
-  saveRoute
+  updateDriverTo
 } from "../../store/driver/actions";
 
 import Colors from '../../constants/Colors';
@@ -137,14 +137,23 @@ class MapScreen extends React.Component {
       //   return;
       // }
       return (
-        <View style={styles.button}>
-          <Button
-            title={'Save'}
-            onPress={() => { this.save() }}/>
-
-          <Button
-            title={'Clear'}
-            onPress={() => { this.clear() }}/>
+        <View style={styles.buttonContainer}>
+          <View style={styles.button}>
+            <Button
+              title={'Clear'}
+              color={Colors.tabIconDefault}
+              onPress={() => {
+                this.clear()
+              }}/>
+          </View>
+          <View style={styles.button}>
+            <Button
+              title={'Save'}
+              color={Colors.tintColor}
+              onPress={() => {
+                this.save()
+              }}/>
+          </View>
         </View>
       );
     }
@@ -176,12 +185,17 @@ const styles = StyleSheet.create({
   currLocationButton: {
     marginTop: 12,
   },
-  button: {
-    position: 'absolute',
-    bottom: 0,
+  buttonContainer: {
     width: '100%',
-    height: 'auto',
-    zIndex: 4,
+    flex: 1,
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    bottom: 0,
+    flexDirection: 'row',
+  },
+  button: {
+    flexBasis: '50%',
   },
 });
 
