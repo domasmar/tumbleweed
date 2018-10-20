@@ -12,11 +12,9 @@ case class Point(lat: Double, lng: Double) {
 
 case class DriverPath(
                        driverId: String,
-                       start: Point,
-                       end: Point,
                        startLabel: String,
                        endLabel: String,
-                       points: List[Point]
+                       route: Route
                      )
 
 object Point {
@@ -33,11 +31,13 @@ object Registries {
   val pickupPointCodec = Macros.createCodecProviderIgnoreNone[PickupPoint]
   val pointCodec = Macros.createCodecProviderIgnoreNone[Point]
   val driverPathCodec = Macros.createCodecProviderIgnoreNone[DriverPath]
+  val routeCodec = Macros.createCodecProviderIgnoreNone[Route]
 
   val codecRegistry = fromRegistries(
     fromProviders(pickupPointCodec),
     fromProviders(pointCodec),
     fromProviders(driverPathCodec),
+    fromProviders(routeCodec),
     DEFAULT_CODEC_REGISTRY
   )
 }

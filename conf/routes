@@ -11,6 +11,9 @@ GET        /assets/*file                                controllers.Assets.versi
 GET        /                                            controllers.HomeController.index
 GET        /chat                                        chat.ChatController.chatSocket
 
+GET        /driverpath/:driverId                       controllers.DriverPathController.getDrivers(driverId: String)
+POST       /driverpath                                 controllers.DriverPathController.save
+
 GET        /pickuppoints/all                            controllers.PickupPointController.getAll()
 GET        /pickuppoints/:lat/:long/:maxDistance        controllers.PickupPointController.get(lat: Double, long: Double, maxDistance: Double)
 

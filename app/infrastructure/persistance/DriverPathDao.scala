@@ -22,7 +22,7 @@ class DriverPathDao @Inject()(implicit databaseConnector: DatabaseConnector, ec:
     p.future
   }
 
-  def getByUser(userId: String): Future[List[DriverPath]] = {
+  def getByDriver(userId: String): Future[List[DriverPath]] = {
     val p = Promise[List[DriverPath]]()
     collection.find(equal("driverId", userId)).subscribe(accumulateObserver(p))
     p.future
