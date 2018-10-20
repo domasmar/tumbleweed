@@ -58,9 +58,9 @@ export function getDriverRoute(startLocation, endLocation) {
 }
 
 export function clearRoute() {
-   return function (dispatch) {
-     dispatch(setRoute(null))
-   }
+  return function (dispatch) {
+    dispatch(setRoute(null))
+  }
 }
 
 export function updateDriverFrom(from) {
@@ -108,19 +108,32 @@ function setDriverTo(to) {
 }
 
 export function saveRoute() {
-  return async function(dispatch, props) {
+  return async function (dispatch, props) {
     const {
       driverRoutes
     } = props();
+    const route = driverRoutes[0];
 
     dispatch(isLoading(true));
+
+    console.info(route.startLocation);
+    console.info(route.endLocation);
+
+    const startUrl = "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + [route.startLocation.lat, route.startLocation.lng].join(',') + "&key=" + "AIzaSyBpDvGSJUey9dg2tTZURDcYSNPi35lp8Vs";
+    const endUrl = "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + [route.endLocation.lat, route.endLocation.lng].join(',') + "&key=" + "AIzaSyBpDvGSJUey9dg2tTZURDcYSNPi35lp8Vs";
+
+    const [startErr, start] = await to(axios.get(startUrl));
+    const [endErr, end] = await to(axios.get(endUrl));
+
+    const startLabel = start.data.results[0].formatted_address;
+    const endLabel = end.data.results[0].formatted_address;
 
     const routeRequest = {
       driverId: 'driver-444',
       carId: 'HAK-777',
-      startLabel: 'Start',
-      endLabel: 'End',
-      route: driverRoutes[0],
+      startLabel: startLabel,
+      endLabel: endLabel,
+      route: route,
       type: 'SHORT_TERM',
       hidden: false,
       active: true

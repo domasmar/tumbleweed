@@ -195,6 +195,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   button: {
+    zIndex: 4,
     flexBasis: '50%',
   },
 });
