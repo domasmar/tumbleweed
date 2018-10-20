@@ -16,10 +16,9 @@ case class DriverPath(
                        startLabel: Option[String],
                        endLabel: Option[String],
                        route: Route,
-                       `type`: PathType,
+                       `type`: String,
                        hidden: Boolean = false,
-                       active: Boolean = true,
-                       _id: Option[String] = None,
+                       active: Boolean = true
                      )
 
 object Point {
@@ -53,19 +52,6 @@ case class Route(
                   endLocation: Point,
                   routeSteps: List[Point]
                 )
-
-sealed case class PathType(value: String) {
-  override def toString: String = value
-}
-
-object PathType {
-
-  object LONG_TERM extends PathType("LONG_TERM")
-
-  object SHORT_TERM extends PathType("SHORT_TERM")
-
-}
-
 
 case class NearestDriverView(
                               driverInfo: DriverInfo,

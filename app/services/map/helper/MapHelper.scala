@@ -22,11 +22,11 @@ object MapHelper {
     val routePoints: List[Point] = route.routeSteps ++ List(route.startLocation, route.endLocation)
     routePoints.map(point => (point, calculateDistanceInKilometer(destination, point)))
       .sortBy(_._2)
-      .map(d => PointToDistance(d._1, d._2))
+      .map(d => PointToDistance(d._1, d._2 * 1000))
       .head
   }
 
 }
 
-case class PointToDistance(point: Point, distance: Double)
+case class PointToDistance(point: Point, distanceMetres: Double)
 
