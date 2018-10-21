@@ -2,6 +2,9 @@ import React from 'react';
 import {StyleSheet} from 'react-native';
 import {connect} from 'react-redux';
 import {GiftedChat} from 'react-native-gifted-chat'
+import {Avatar} from "react-native-elements";
+
+import {MappedUsers} from "../Users";
 
 class PassangerChatScreen extends React.Component {
   static navigationOptions = {
@@ -64,20 +67,13 @@ class PassangerChatScreen extends React.Component {
           text: msg.text,
           user: {
             _id: msg.author,
-            name: 'Bill'
+            name: MappedUsers[msg.author].name,
+            avatar: MappedUsers[msg.author].picture
           },
         }
       }).reverse();
     } else {
-      return [{
-        _id: 1,
-        createdAt: new Date(),
-        text: "Sveiki",
-        user: {
-          _id: "mindaugas",
-          name: 'Domas'
-        },
-      }]
+      return []
     }
   }
 
@@ -98,8 +94,18 @@ class PassangerChatScreen extends React.Component {
       <GiftedChat
         messages={this.state.messages}
         onSend={messages => this.onSend(messages)}
+        showUserAvatar={true}
         user={{
           _id: this.props.navigation.state.params.senderId,
+        }}
+        renderAvatar={(msg) => {
+          return (
+            <Avatar
+              rounded
+              source={{uri: msg.currentMessage.user.avatar }}
+              activeOpacity={0.7}
+            />
+          )
         }}
       />
     )

@@ -2,7 +2,7 @@ import React from 'react';
 import {Text} from "react-native";
 
 import {MappedUsers} from './Users';
-// import axios from "axios";
+import axios from "axios";
 import connect from "react-redux/es/connect/connect";
 import {List, ListItem} from "react-native-elements";
 
@@ -29,10 +29,6 @@ export class ChatList extends React.Component {
   }
 
   async loadChats() {
-    await new Promise((resolve) => {
-      setTimeout(() => resolve(), 2000);
-    });
-
     console.log(this.props.passenger);
     console.log(this.props.driver);
 
@@ -43,17 +39,11 @@ export class ChatList extends React.Component {
 
     this.setState(() => ({
       loading: false,
-      chats: [{
-        receiverId: 'steve',
-      }, {
-        receiverId: 'bill'
-      }, {
-        receiverId: 'mindaugas'
-      }, {
-        receiverId: 'domas'
-      }, {
-        receiverId: 'edgaras'
-      }]
+      chats: chats.map(chat => {
+        return {
+          receiverId: chat.members.filter(m => m !== this.senderId)[0]
+        }
+      })
     }))
   }
 

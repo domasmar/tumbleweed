@@ -32,6 +32,6 @@ class ChatRepository {
   }
 
   def getUserConversations(user: String): List[Conversation] = {
-    conversations.filter(conv => conv.members._1.equals(user))
+    conversations.filter(conv => conv.members._1.equals(user) || conv.members._2.equals(user))
   }
 }
