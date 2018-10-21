@@ -1,7 +1,7 @@
 export const passengers = [{
   userId: 'domas',
   name: 'Domas',
-  picture: 'https://api.adorable.io/avatars/250/user200'
+  picture: 'https://api.adorable.io/avatars/250/user212'
 } , {
   userId: 'mindaugas',
   name: 'Mindaugas',

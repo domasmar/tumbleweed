@@ -1,4 +1,9 @@
 export const drivers = [{
+  userId: 'edgarasDriver',
+  name: 'Edgaras',
+  number: 'MCS-111',
+  picture: 'https://pickaface.net/gallery/avatar/zazasales53fe6493782a5.png'
+}, {
   userId: 'bill',
   name: 'Bill Gates',
   number: 'MCS-111',

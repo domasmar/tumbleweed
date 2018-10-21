@@ -20,7 +20,7 @@ export class MyProfile extends React.Component {
   constructor(props) {
     super(props);
 
-    const randomDriver = Drivers[1] //[Math.floor(Math.random() * Drivers.length)]
+    const randomDriver = Drivers[0] //[Math.floor(Math.random() * Drivers.length)]
     this.props.setDriver({...randomDriver})
   }
 
