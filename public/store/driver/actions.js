@@ -145,6 +145,7 @@ export function saveRoute() {
     };
 
     await to(axios.post('https://tumbleweed-hack.herokuapp.com/driver/path', routeRequest));
+    await to(dispatch(getDriverRoutesHistory(driver)));
     dispatch(isLoading(false));
   }
 }

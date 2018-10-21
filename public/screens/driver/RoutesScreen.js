@@ -1,14 +1,12 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {StyleSheet, Text, View} from "react-native";
+import {StyleSheet} from "react-native";
 import {List, ListItem} from 'react-native-elements'
 
-import _isEqual from 'lodash/isEqual';
 import {grid} from "../../constants/Styles";
 import LoadingView from '../../components/Loading';
 
 import { getDriverRoutesHistory } from "../../store/driver/actions";
-import {mappedDrivers} from "../Drivers";
 
 class RoutesScreen extends React.Component {
   static navigationOptions = {
