@@ -31,7 +31,10 @@ class DriversListScreen extends React.Component {
   }
 
   selectDriver(driver) {
-    console.log(driver);
+    this.props.navigation.navigate('ChatScreen', {
+      senderId: this.props.passenger.userId,
+      receiverId: driver.driverInfo.driverId
+    })
   }
 
   render() {
@@ -69,8 +72,8 @@ const styles = StyleSheet.create({
   },
 });
 
-const mapStateToProps = ({isLoading, driversList}) => {
-  return {isLoading, driversList};
+const mapStateToProps = ({isLoading, driversList, passenger}) => {
+  return {isLoading, driversList, passenger};
 };
 
 const mapDispatchToProps = {
