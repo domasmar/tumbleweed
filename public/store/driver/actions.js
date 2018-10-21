@@ -89,7 +89,7 @@ export function updateDriverRoute() {
 
 export const SET_DRIVER_FROM = 'SET_DRIVER_FROM';
 
-function setDriverFrom(from) {
+export function setDriverFrom(from) {
   return {
     type: SET_DRIVER_FROM,
     driverFrom: from
@@ -98,7 +98,7 @@ function setDriverFrom(from) {
 
 export const SET_DRIVER_TO = 'SET_DRIVER_TO';
 
-function setDriverTo(to) {
+export function setDriverTo(to) {
   return {
     type: SET_DRIVER_TO,
     driverTo: to
