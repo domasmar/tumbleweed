@@ -3,7 +3,7 @@ import {StyleSheet} from 'react-native';
 import {connect} from 'react-redux';
 import {GiftedChat} from 'react-native-gifted-chat'
 
-class ChatScreen extends React.Component {
+class DriverChatScreen extends React.Component {
     static navigationOptions = {
         title: 'Chat',
     };
@@ -17,8 +17,8 @@ class ChatScreen extends React.Component {
 
         this.socket = new WebSocket('ws://tumbleweed-hack.herokuapp.com/chat', '', {
             headers: {
-                "chat-sender": "AAA",
-                "chat-receiver": "BBB"
+                "chat-sender": "mindaugas",
+                "chat-receiver": "domas"
             }
         });
 
@@ -39,25 +39,43 @@ class ChatScreen extends React.Component {
     };
 
     componentWillMount() {
-        this.socket.onopen = () => console.log("Connected to WS");//this.socket.send(JSON.stringify({type: 'greet', payload: 'Hello Mr. Server!'}));
-        this.socket.onmessage = ({data}) => console.log(data);
+        this.socket.onopen = () => console.log("Connected to WS");
+        this.socket.onmessage = ({data}) => {
+            this.setState(previousState => ({
+                messages: GiftedChat.append([], this.toClientMessages(data)),
+            }));
+        };
+
         this.setState({
-            messages: [
-                {
-                    _id: "111",
-                    text: 'Hello developer',
-                    createdAt: new Date(),
-                    user: {
-                        _id: "111",
-                        name: 'React Native'
-                    },
-                },
-            ],
+            messages: [],
         })
     }
 
     toClientMessages(data) {
-
+        data = JSON.parse(data);
+        if (data && data.history) {
+            return data.history.map(msg => {
+                return {
+                    _id: msg.id,
+                    createdAt: new Date(),
+                    text: msg.text,
+                    user: {
+                        _id: msg.author,
+                        name: 'Bill'
+                    },
+                }
+            }).reverse();
+        } else {
+            return [{
+                _id: 1,
+                createdAt: new Date(),
+                text: "Sveiki",
+                user: {
+                    _id: "mindaugas",
+                    name: 'Domas'
+                },
+            }]
+        }
     }
 
     toServerMessage(message) {
@@ -70,9 +88,6 @@ class ChatScreen extends React.Component {
 
     onSend(messages = []) {
         this.socket.send(JSON.stringify(this.toServerMessage(messages)));
-        this.setState(previousState => ({
-            messages: GiftedChat.append(previousState.messages, messages),
-        }))
     }
 
     render() {
@@ -81,7 +96,7 @@ class ChatScreen extends React.Component {
                 messages={this.state.messages}
                 onSend={messages => this.onSend(messages)}
                 user={{
-                    _id: "AAA",
+                    _id: "mindaugas",
                 }}
             />
         )
@@ -122,5 +137,5 @@ const mapStateToProps = ({isLoading, chatList}) => {
 const mapDispatchToProps = {};
 
 export default connect(mapStateToProps, mapDispatchToProps)(
-    ChatScreen
+    DriverChatScreen
 );
