@@ -1,5 +1,5 @@
 import React from "react";
-import { View, StyleSheet, Text} from 'react-native';
+import { View, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import { Icon } from 'react-native-elements';
 import { Provider, connect } from 'react-redux';
 
@@ -9,36 +9,50 @@ import DriversStore from '../store/driver/reducers';
 import PassengersNavigator from '../navigation/PassengerNavigator';
 import DriversNavigator from '../navigation/DriverNavigator';
 
+import Colors from '../constants/Colors';
 import {setDriver, setPassenger} from "../store/rootReducers";
 
 class LandingPage extends React.Component {
   renderLandingView() {
     return (
       <View style={styles.container}>
-        <View style={styles.buttonContainer}>
+        <TouchableOpacity
+          style={styles.buttonContainerPassenger}
+          onPress={() => {
+            this.props.setPassenger(true)
+          }}
+        >
           <Icon
-            reverse
-            name='sentiment-satisfied'
+            color='#fff'
+            size={42}
+            name='person'
             onPress={() => {
-              this.props.setPassenger(true)
+              this.props.setDriver(true);
             }}
           />
-          <Text>
+          <Text
+            style={styles.textStylePassenger}
+            color='#fff'
+          >
             Passenger
           </Text>
-        </View>
-        <View style={styles.buttonContainer}>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.buttonContainerDriver}
+          onPress={() => {
+            this.props.setDriver(true);
+          }}
+        >
           <Icon
-            reverse
+            color={Colors.tintColor}
+            size={42}
             name='directions-car'
             onPress={() => {
               this.props.setDriver(true);
             }}
           />
-          <Text>
-            Driver
-          </Text>
-        </View>
+          <Text style={styles.textStyleDriver}> Driver </Text>
+        </TouchableOpacity>
       </View>
     );
   }
@@ -74,6 +88,14 @@ class LandingPage extends React.Component {
   }
 }
 
+const buttonContainer = {
+  height: '100%',
+  flex: 1,
+  flexGrow: 1,
+  alignItems: 'center',
+  justifyContent: 'center',
+};
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -81,10 +103,22 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  buttonContainer: {
-    flex: 1,
-    alignItems: 'center'
-  }
+  buttonContainerPassenger: {
+    ...buttonContainer,
+    backgroundColor: Colors.tintColor,
+  },
+  buttonContainerDriver: {
+    ...buttonContainer,
+    backgroundColor: '#fff',
+  },
+  textStyleDriver: {
+    color: Colors.tintColor,
+    fontSize: 16,
+  },
+  textStylePassenger: {
+    color: '#fff',
+    fontSize: 16,
+  },
 });
 
 const mapStateToProps = ({isDriver, isPassenger}) => {
