@@ -18,6 +18,13 @@ export class ChatList extends React.Component {
       loading: true,
       chats: [],
     };
+
+    if (this.props.passenger) {
+      this.senderId = this.props.passenger.userId;
+    } else if (this.props.driver) {
+      this.senderId = this.props.driver.userId;
+    }
+
     this.loadChats();
   }
 
@@ -29,8 +36,10 @@ export class ChatList extends React.Component {
     console.log(this.props.passenger);
     console.log(this.props.driver);
 
-    // const response = await axios.get("https://tumbleweed-hack.herokuapp.com/chats/" + '');
-    // const chats = response.data;
+    const response = await axios.get("https://tumbleweed-hack.herokuapp.com/chat/user/" + this.senderId + "/conversations");
+    const chats = response.data;
+
+    console.debug(chats);
 
     this.setState(() => ({
       loading: false,
@@ -54,6 +63,7 @@ export class ChatList extends React.Component {
 
   openChat(chat) {
     this.props.navigation.navigate('ChatScreen', {
+      senderId: this.senderId,
       receiverId: chat.receiverId
     });
   }

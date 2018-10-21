@@ -53,7 +53,7 @@ DriversListStack.navigationOptions = {
 
 const ChatListStack = createStackNavigator({
   ChatList: ChatList,
-  ChatScreen: ChatScreen,
+  ChatScreen: PassangerChatScreen,
 });
 
 ChatListStack.navigationOptions = {
