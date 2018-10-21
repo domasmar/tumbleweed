@@ -1,9 +1,9 @@
 import axios from "axios";
 import React from 'react';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {StyleSheet} from 'react-native';
 import {connect} from 'react-redux';
 
-import { grid } from '../../constants/Styles';
+import {grid} from '../../constants/Styles';
 import {setSelectedRoute} from '../../store/passenger/actions';
 import LoadingView from '../../components/Loading';
 
@@ -38,29 +38,30 @@ class DriversListScreen extends React.Component {
   }
 
   render() {
-    if (!this.props.isLoading) {
-      return (
-        <List>
-          {
-            this.props.driversList.map((driver) => (
-                <ListItem
-                  onPress={() => this.previewDriver(driver)}
-                  onPressRightIcon={() => this.selectDriver(driver)}
-                  rightIcon={{name: 'chat'}}
-                  key={Math.random()}
-                  roundAvatar
-                  avatar={{uri: mappedDrivers[driver.driverInfo.driverId].picture}}
-                  title={mappedDrivers[driver.driverInfo.driverId].name}
-                  subtitle={mappedDrivers[driver.driverInfo.driverId].number}
-                />
-              )
-            )
-          }
-
-        </List>
-      );
+    if (this.props.isLoading) {
+      return <LoadingView/>;
     }
-    return <LoadingView/>;
+    return (
+      <List>
+        {
+          this.props.driversList.map((driver) => (
+              <ListItem
+                onPress={() => this.previewDriver(driver)}
+                onPressRightIcon={() => this.selectDriver(driver)}
+                rightIcon={{name: 'chat'}}
+                key={Math.random()}
+                roundAvatar
+                avatar={{uri: mappedDrivers[driver.driverInfo.driverId].picture}}
+                title={mappedDrivers[driver.driverInfo.driverId].name}
+                subtitle={mappedDrivers[driver.driverInfo.driverId].number}
+              />
+            )
+          )
+        }
+
+      </List>
+    );
+
   }
 }
 
