@@ -180,3 +180,19 @@ export function getDriverRoutesHistory(driver = {}) {
     dispatch(isLoading(false));
   };
 }
+
+export function deleteRoute(route) {
+  return async function (dispatch) {
+    dispatch(isLoading(true));
+
+    const [err, routes] = await to(axios.delete(`https://tumbleweed-hack.herokuapp.com/direction/route/${route.routeId}`));
+
+    await new Promise((resolve) => {
+      setTimeout(() => {
+        resolve()
+      }, 1000);
+    });
+
+    dispatch(isLoading(false));
+  }
+}

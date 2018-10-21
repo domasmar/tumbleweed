@@ -7,6 +7,10 @@ import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
 class DriverPathService @Inject()(driverPathDao: DriverPathDao)(implicit ec: ExecutionContext) {
+  def delete(routeId: String): Unit = {
+    driverPathDao.delete(routeId)
+  }
+
   def save(path: DriverPath): Unit = {
     driverPathDao.save(List(path))
   }

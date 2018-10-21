@@ -6,7 +6,7 @@ import javax.inject.{Inject, Singleton}
 import play.api.mvc.{AbstractController, AnyContent, ControllerComponents, Request}
 import services.map.api.GoogleDirectionsService
 
-import scala.concurrent.ExecutionContext
+import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class DirectionsController @Inject()(
@@ -22,6 +22,11 @@ class DirectionsController @Inject()(
       .getOrElse(NotFound("route was not faund"))
   }
 
+
+  def routeDelete(routeId: String) = Action.async { implicit request: Request[AnyContent] =>
+    driverPathService.delete(routeId)
+    Future.successful(Ok("deleted"))
+  }
 
   def routeGet(routeId: String) = Action.async { implicit request: Request[AnyContent] =>
     driverPathService.getByRouteId(routeId).map { route =>

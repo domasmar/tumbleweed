@@ -53,6 +53,10 @@ class DriverPathDao @Inject()(implicit databaseConnector: DatabaseConnector, ec:
     }
   }
 
+  def delete(routeId: String): Unit = {
+    collection.deleteOne(equal("routeId", routeId)).subscribe(deleteObserver)
+  }
+
   def updatePathStatus(routeId: String, hide: Boolean): Unit = {
     collection.findOneAndUpdate(equal("routeId", routeId), set("hidden", hide))
       .subscribe(accumulateObserver(Promise[List[DriverPath]]()))
