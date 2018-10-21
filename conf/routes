@@ -10,6 +10,7 @@ GET         /assets/*file                                controllers.Assets.vers
 # An example controller showing a sample home page
 GET         /                                            controllers.HomeController.index
 GET         /chat                                        chat.ChatController.chatSocket
+GET         /chat/user/:userId/conversations             chat.ChatController.getUserConversations(userId: String)
 
 GET         /driver/:driverId/paths                      controllers.DriverPathController.getDriverPaths(driverId: String)
 POST        /driver/path                                 controllers.DriverPathController.save

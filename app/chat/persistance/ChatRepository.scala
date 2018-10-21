@@ -30,4 +30,8 @@ class ChatRepository {
   def getMessages(conversationId: Long): List[Message] = {
     messagesByConversationId.getOrElse(conversationId, List.empty)
   }
+
+  def getUserConversations(user: String): List[Conversation] = {
+    conversations.filter(conv => conv.members._1.equals(user))
+  }
 }

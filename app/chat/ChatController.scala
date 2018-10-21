@@ -5,6 +5,7 @@ import akka.stream.Materializer
 import chat.actors.{ChatRoomFactory, UserActor}
 import chat.models.{IncomingMessage, Message, OutgoingMessage}
 import chat.services.ChatService
+import controllers.Mapper
 import javax.inject.Inject
 import play.api.libs.json.{Json, OFormat}
 import play.api.libs.streams.ActorFlow
@@ -18,10 +19,12 @@ class ChatController @Inject()(
                                 chatService: ChatService,
                                 chatRoomFactory: ChatRoomFactory
                               )
-                              (implicit system: ActorSystem, mat: Materializer) extends AbstractController(cc) {
+                              (implicit system: ActorSystem, mat: Materializer) extends AbstractController(cc) with Mapper {
 
   implicit def incomingMessageFormat: OFormat[IncomingMessage] = Json.format[IncomingMessage]
+
   implicit def outgoingMessageFormat: OFormat[OutgoingMessage] = Json.format[OutgoingMessage]
+
   implicit def messageFormat: OFormat[Message] = Json.format[Message]
 
   implicit def messageFlowTransformer: MessageFlowTransformer[IncomingMessage, OutgoingMessage] = MessageFlowTransformer.jsonMessageFlowTransformer[IncomingMessage, OutgoingMessage]
@@ -39,6 +42,9 @@ class ChatController @Inject()(
     }
   }
 
+  def getUserConversations(userId: String) = Action { implicit request =>
+    Ok(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(chatService.getUserConversation(userId)))
+  }
 
   private def getSenderAndReceiverIds(request: RequestHeader): Option[(String, String)] = {
     for {

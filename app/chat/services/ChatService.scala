@@ -25,4 +25,6 @@ class ChatService @Inject()(chatRepository: ChatRepository) {
   }
 
   def getConversationHistory(conversationId: Long): List[Message] = chatRepository.getMessages(conversationId)
+
+  def getUserConversation(user: String): List[Conversation] = chatRepository.getUserConversations(user);
 }
