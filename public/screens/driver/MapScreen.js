@@ -32,16 +32,23 @@ class MapScreen extends React.Component {
   constructor(props) {
     super(props);
     this.map = React.createRef();
+    this.isCancelled = false;
   }
 
   componentWillMount() {
     this.props.getLocation();
   }
 
+  componentWillUnmount() {
+    this.isCancelled = true;
+  }
+
   async save() {
     await this.props.saveRoute();
-    this.clear();
-    this.props.navigation.navigate('RoutesListStack');
+    if (!this.isCancelled) {
+      this.clear();
+      this.props.navigation.navigate('RoutesListStack');
+    }
   }
 
   clear() {
@@ -117,7 +124,7 @@ class MapScreen extends React.Component {
     };
 
     const renderConfirmButton = () => {
-      if (this.props.driverFrom && this.props.driverTo) {
+      if (this.props.driverFrom !== null) {
         return (
           <View style={styles.buttonContainer}>
             <View style={styles.button}>
@@ -132,8 +139,8 @@ class MapScreen extends React.Component {
               <Button
                 title={'Save'}
                 color={Colors.tintColor}
-                onPress={async () => {
-                  await this.save();
+                onPress={() => {
+                  this.save();
                 }}/>
             </View>
           </View>

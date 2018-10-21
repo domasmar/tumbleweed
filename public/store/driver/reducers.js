@@ -15,7 +15,7 @@ function isLoading(state = false, action) {
 function driverRoutes(state = [], action) {
   switch (action.type) {
     case SET_ROUTE:
-      return action.route === null ? [] : [...state, action.route.data];
+      return action.route === null ? [] : [action.route.data];
     default:
       return state;
   }
