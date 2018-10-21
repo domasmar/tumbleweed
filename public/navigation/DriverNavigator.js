@@ -7,6 +7,7 @@ import MapScreen from '../screens/driver/MapScreen';
 import RoutesList from '../screens/driver/RoutesScreen';
 import MyProfile from '../screens/driver/MyProfile';
 import ChatScreen from "../screens/ChatScreen";
+import ChatList from '../screens/ChatList';
 
 const MyProfileStack = createStackNavigator({
   Profile: MyProfile
@@ -51,6 +52,7 @@ RoutesListStack.navigationOptions = {
 };
 
 const ChatListStack = createStackNavigator({
+  ChatList: ChatList,
   ChatScreen: ChatScreen,
 });
 
