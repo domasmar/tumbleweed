@@ -6,7 +6,7 @@ import TabBarIcon from '../components/TabBarIcon';
 import MapScreen from '../screens/driver/MapScreen';
 import RoutesList from '../screens/driver/RoutesScreen';
 import MyProfile from '../screens/driver/MyProfile';
-import ChatScreen from "../screens/ChatScreen";
+import DriverChatScreen from "../screens/driver/DriverChatScreen";
 
 const MyProfileStack = createStackNavigator({
   Profile: MyProfile
@@ -51,7 +51,7 @@ RoutesListStack.navigationOptions = {
 };
 
 const ChatListStack = createStackNavigator({
-  ChatScreen: ChatScreen,
+    DriverChatScreen: DriverChatScreen,
 });
 
 ChatListStack.navigationOptions = {

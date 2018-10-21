@@ -5,7 +5,7 @@ import {createBottomTabNavigator, createStackNavigator} from 'react-navigation';
 import TabBarIcon from '../components/TabBarIcon';
 import MapScreen from '../screens/passenger/MapScreen';
 import DriversList from "../screens/passenger/DriversListScreen";
-import ChatScreen from "../screens/ChatScreen";
+import PassangerChatScreen from "../screens/passenger/PassangerChatScreen";
 import MyProfile from "../screens/passenger/MyProfile";
 
 const MyProfileStack = createStackNavigator({
@@ -51,7 +51,7 @@ DriversListStack.navigationOptions = {
 };
 
 const ChatListStack = createStackNavigator({
-  ChatScreen: ChatScreen,
+    PassangerChatScreen: PassangerChatScreen,
 });
 
 ChatListStack.navigationOptions = {
