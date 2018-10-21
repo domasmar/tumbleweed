@@ -1,12 +1,14 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {StyleSheet, Text, View} from "react-native";
+import {List, ListItem} from 'react-native-elements'
 
+import _isEqual from 'lodash/isEqual';
 import {grid} from "../../constants/Styles";
-import ListView from '../../components/ListView';
 import LoadingView from '../../components/Loading';
 
 import { getDriverRoutesHistory } from "../../store/driver/actions";
+import {mappedDrivers} from "../Drivers";
 
 class RoutesScreen extends React.Component {
   static navigationOptions = {
@@ -21,49 +23,27 @@ class RoutesScreen extends React.Component {
     this.props.getDriverRoutesHistory(this.props.driver);
   }
 
-  renderItem(item) {
-    if (item.hidden !== 'true') {
+  renderListItem(route) {
+    if (route.hidden !== true) {
       return (
-        <React.Fragment>
-          <View style={styles.container}>
-            <View style={styles.col3}>
-              <View style={ styles.row }>
-                <Text style={styles.textLabel}>DRIVER:</Text>
-                <Text>{item.driverId}</Text>
-              </View>
-            </View>
-            <View style={styles.col3}>
-              <View style={ styles.row }>
-                <Text style={styles.textLabel}>CAR:</Text>
-                <Text>{item.carId}</Text>
-              </View>
-            </View>
-            <View style={styles.col4}>
-              <View style={ styles.row }>
-                <Text style={styles.textLabel}>TYPE:</Text>
-                <Text>{item.type}</Text>
-              </View>
-            </View>
-          </View>
-        </React.Fragment>
+        <ListItem
+          onPress={() => console.info(route)}
+          // onPressRightIcon={() => console.info(route)}
+          leftIcon={{ name: 'place' }}
+          key={Math.random().toString(36).substr(2, 9)}
+          title={route.startLabel}
+          subtitle={route.endLabel}
+        />
       );
     }
-    return null;
   }
 
   render() {
     if (!this.props.isLoading) {
-      // console.info(this.props.driverRoutesHistory.length);
       return (
-        <ListView
-          items={
-            this.props.driverRoutesHistory.map(item => ({
-              ...item,
-              key: Math.random().toString(36).substr(2, 9),
-            }))
-          }
-          getRenderItem={this.renderItem}
-        />
+        <List>
+          {this.props.driverRoutesHistory.map((route) => this.renderListItem(route))}
+        </List>
       );
     }
     return <LoadingView/>;

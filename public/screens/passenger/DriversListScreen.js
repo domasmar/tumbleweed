@@ -1,3 +1,4 @@
+import axios from "axios";
 import React from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {connect} from 'react-redux';
@@ -9,7 +10,6 @@ import LoadingView from '../../components/Loading';
 import {mappedDrivers} from '../Drivers';
 
 import {List, ListItem} from 'react-native-elements'
-import axios from "axios";
 
 class DriversListScreen extends React.Component {
   static navigationOptions = {

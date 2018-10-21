@@ -115,17 +115,23 @@ export function saveRoute() {
 
     dispatch(isLoading(true));
 
-    // console.info(route.startLocation);
-    // console.info(route.endLocation);
-
     const startUrl = "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + [route.startLocation.lat, route.startLocation.lng].join(',') + "&key=" + "AIzaSyBpDvGSJUey9dg2tTZURDcYSNPi35lp8Vs";
     const endUrl = "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + [route.endLocation.lat, route.endLocation.lng].join(',') + "&key=" + "AIzaSyBpDvGSJUey9dg2tTZURDcYSNPi35lp8Vs";
 
     const [startErr, start] = await to(axios.get(startUrl));
     const [endErr, end] = await to(axios.get(endUrl));
 
-    const startLabel = start.data.results[0].formatted_address;
-    const endLabel = end.data.results[0].formatted_address;
+    const startStreetName = start.data.results[0].address_components[1].short_name;
+    const startStreetNumber = start.data.results[0].address_components[0].short_name;
+    const startCity = start.data.results[0].address_components[2].short_name;
+
+    const startLabel = `${startStreetName} ${startStreetNumber}, ${startCity}`;
+
+    const endStreetName = end.data.results[0].address_components[1].short_name;
+    const endStreetNumber = end.data.results[0].address_components[0].short_name;
+    const endCity = end.data.results[0].address_components[2].short_name;
+
+    const endLabel = `${endStreetName} ${endStreetNumber}, ${endCity}`;
 
     const routeRequest = {
       driverId: driver.userId,
