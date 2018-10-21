@@ -9,10 +9,8 @@ export default class Autocomplete extends React.Component {
     super(props);
   }
 
-
   render() {
     const {
-      currentLocation,
       renderRightButton,
       onSelect
     } = this.props;
@@ -25,11 +23,15 @@ export default class Autocomplete extends React.Component {
           minLength={2}
           query={{
             key: 'AIzaSyBpDvGSJUey9dg2tTZURDcYSNPi35lp8Vs',
-            language: 'lt', // language of the results
-            types: 'geocode' // default: 'geocode'
+            language: 'LT', // language of the results
+            types: 'geocode', // default: 'geocode'
+            location: "54.6872, 25.2797",
+            radius: "100000", //100 km
+            components: "country:LT", // country name
+            strictbounds: true,
           }}
           GoogleReverseGeocodingQuery={{
-            latlng: '54.6872,25.2797', // vilnius
+            latlng: '54.6872, 25.2797', // vilnius
             rankby: 'distance'
           }}
           placeholder={this.props.placeholder}
