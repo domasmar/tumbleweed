@@ -1,9 +1,9 @@
 package controllers
 
 import entity.DriverPath
-import infrastructure.DriverPathService
 import javax.inject.Inject
 import play.api.mvc.{AbstractController, Action, AnyContent, ControllerComponents}
+import services.DriverPathService
 
 import scala.concurrent.ExecutionContext
 

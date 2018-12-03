@@ -1,5 +1,6 @@
 package entity
 
+import chat.models.{Conversation, Message}
 import com.google.maps.model.LatLng
 import org.bson.codecs.configuration.CodecRegistries._
 import org.mongodb.scala.bson.codecs.{DEFAULT_CODEC_REGISTRY, Macros}
@@ -50,12 +51,16 @@ object Registries {
   val pointCodec = Macros.createCodecProviderIgnoreNone[Point]
   val driverPathCodec = Macros.createCodecProviderIgnoreNone[DriverPath]
   val routeCodec = Macros.createCodecProviderIgnoreNone[Route]
+  val conversationCodec = Macros.createCodecProvider[Conversation]
+  val messageCodec = Macros.createCodecProvider[Message]
 
   val codecRegistry = fromRegistries(
     fromProviders(pickupPointCodec),
     fromProviders(pointCodec),
     fromProviders(driverPathCodec),
     fromProviders(routeCodec),
+    fromProviders(conversationCodec),
+    fromProviders(messageCodec),
     DEFAULT_CODEC_REGISTRY
   )
 }
@@ -77,3 +82,8 @@ case class DriverInfo(driverId: String,
                       routeId: String)
 
 case class StartEndLocation(startLocation: Point, endLocation: Point)
+
+
+case class DBActionResultSuccess() {
+  override def toString: String = "DB transaction was successfull"
+}

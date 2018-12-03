@@ -1,8 +1,8 @@
 package services.passengers
 
 import entity._
-import infrastructure.DriverPathService
 import javax.inject.{Inject, Singleton}
+import services.DriverPathService
 import services.map.helper.MapHelper
 
 import scala.concurrent.{ExecutionContext, Future}

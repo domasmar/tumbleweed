@@ -1,9 +1,9 @@
 package controllers
 
 import entity.Point
-import infrastructure.PickupPointService
 import javax.inject.{Inject, Singleton}
 import play.api.mvc.{AbstractController, AnyContent, ControllerComponents, Request}
+import services.PickupPointService
 
 import scala.concurrent.ExecutionContext
 

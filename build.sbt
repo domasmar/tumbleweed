@@ -6,7 +6,7 @@ version := "1.0-SNAPSHOT"
 
 lazy val tumbleweed = (project in file(".")).enablePlugins(PlayScala)
 
-scalaVersion := "2.12.6"
+scalaVersion := "2.12.7"
 
 libraryDependencies += guice
 libraryDependencies += ws

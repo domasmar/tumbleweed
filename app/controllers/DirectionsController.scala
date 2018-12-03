@@ -1,9 +1,9 @@
 package controllers
 
 import entity.StartEndLocation
-import infrastructure.DriverPathService
 import javax.inject.{Inject, Singleton}
 import play.api.mvc.{AbstractController, AnyContent, ControllerComponents, Request}
+import services.DriverPathService
 import services.map.api.GoogleDirectionsService
 
 import scala.concurrent.{ExecutionContext, Future}

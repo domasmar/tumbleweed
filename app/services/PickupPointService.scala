@@ -1,4 +1,4 @@
-package infrastructure
+package services
 
 import entity.{PickupPoint, Point}
 import infrastructure.persistance.PickupPointDao

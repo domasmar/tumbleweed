@@ -1,4 +1,4 @@
-package infrastructure
+package services
 
 import entity.{DriverPath, DriverPathView}
 import infrastructure.persistance.DriverPathDao

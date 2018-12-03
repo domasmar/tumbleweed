@@ -1,16 +1,36 @@
 package chat.actors
 
 import akka.actor.{Actor, ActorRef, _}
-import akka.pattern.ask
+import akka.pattern.{ask, pipe}
 import akka.util.Timeout
+import chat.actors.ChatRoom.{JoinRoom, RequestRoomHistory, UserMessage}
+import chat.actors.UserActor._
 import chat.models._
-import chat.services.ChatService
 
-import scala.concurrent.Await
+import scala.concurrent.ExecutionContext
 import scala.concurrent.duration._
 
+object UserActor {
 
-class UserActor(out: ActorRef, chatRoom: ActorRef)(chatService: ChatService, userId: String) extends Actor {
+  case class IncomingMessage(text: String)
+
+  case class RoomMessage(message: Message)
+
+  case class OutgoingMessage(message: Seq[Message])
+
+  case class UserConnected(outgoing: ActorRef)
+
+  case object Init
+
+  case object Ack
+
+  case object Complete
+
+}
+
+class UserActor(out: ActorRef, chatRoom: ActorRef, userId: String)(implicit ec: ExecutionContext) extends Actor {
+
+  implicit val timeout: Timeout = 5.seconds
 
   override def preStart(): Unit = {
     println(s"connected $userId")
@@ -22,23 +42,24 @@ class UserActor(out: ActorRef, chatRoom: ActorRef)(chatService: ChatService, use
       context.become(connected(outgoing))
   }
 
-  private def connected(outgoing: ActorRef): Receive = {
+  override def unhandled(message: Any): Unit = {
+    println("Unhandled")
+    println(message)
+  }
 
+  private def connected(outgoing: ActorRef): Receive = {
     chatRoom ! JoinRoom
 
+    val historyFuture = chatRoom ? RequestRoomHistory
+    historyFuture.mapTo[Seq[Message]].map(OutgoingMessage) pipeTo outgoing
+
+
     {
-      case IncomingMessage(text) => handleIncomingMessage(text)
-      case RoomMessage(history) => outgoing ! OutgoingMessage(history)
+      case IncomingMessage(text) => chatRoom ! UserMessage(userId, text)
+      case RoomMessage(message) =>
+        outgoing ! OutgoingMessage(Seq(message))
+        sender() ! Ack
+      case Init => sender() ! Ack
     }
   }
-
-  private def handleIncomingMessage(text: String): Unit = {
-    implicit val timeout: Timeout = Timeout(5 seconds)
-    val future = chatRoom ? IdentificationRequest
-    val roomId = Await.result(future, timeout.duration).asInstanceOf[Long]
-    chatRoom ! RoomMessage(chatService.postMessage(roomId, userId, text))
-  }
-
 }
-
-// create factory to re use User actor on multiple connections

@@ -2,9 +2,10 @@ package chat
 
 import akka.actor.{ActorSystem, Props}
 import akka.stream.Materializer
+import akka.stream.scaladsl.{Flow, Sink, Source}
+import chat.actors.UserActor.{IncomingMessage, OutgoingMessage}
 import chat.actors.{ChatRoomFactory, UserActor}
-import chat.models.{IncomingMessage, Message, OutgoingMessage}
-import chat.services.ChatService
+import chat.models.Message
 import controllers.Mapper
 import javax.inject.Inject
 import play.api.libs.json.{Json, OFormat}
@@ -12,14 +13,13 @@ import play.api.libs.streams.ActorFlow
 import play.api.mvc.WebSocket.MessageFlowTransformer
 import play.api.mvc.{AbstractController, ControllerComponents, _}
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 class ChatController @Inject()(
                                 cc: ControllerComponents,
-                                chatService: ChatService,
                                 chatRoomFactory: ChatRoomFactory
                               )
-                              (implicit system: ActorSystem, mat: Materializer) extends AbstractController(cc) with Mapper {
+                              (implicit system: ActorSystem, mat: Materializer, ec: ExecutionContext) extends AbstractController(cc) with Mapper {
 
   implicit def incomingMessageFormat: OFormat[IncomingMessage] = Json.format[IncomingMessage]
 
@@ -42,10 +42,6 @@ class ChatController @Inject()(
     }
   }
 
-  def getUserConversations(userId: String) = Action { implicit request =>
-    Ok(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(chatService.getUserConversation(userId)))
-  }
-
   private def getSenderAndReceiverIds(request: RequestHeader): Option[(String, String)] = {
     for {
       sender <- request.headers.get("chat-sender")
@@ -54,6 +50,6 @@ class ChatController @Inject()(
   }
 
   private def getFlow(sender: String, receiver: String) = ActorFlow.actorRef {
-    out => Props(new UserActor(out, chatRoomFactory.getOrCreateRoom(sender, receiver))(chatService, sender))
+    out => Props(new UserActor(out, chatRoomFactory.getOrCreateRoom(sender, receiver), sender))
   }
 }
